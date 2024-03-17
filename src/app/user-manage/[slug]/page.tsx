@@ -1,7 +1,7 @@
 export default function Page() {
     return (
       <>
-        <h1>This is a product manager.</h1>
+        <h1>user manage slug page.</h1>
       </>
     );
   }
