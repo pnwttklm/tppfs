@@ -1,5 +1,4 @@
 import React from 'react';
-import { FaTrashAlt } from "react-icons/fa";
 
 const Page = () => {
   return (
@@ -8,19 +7,13 @@ const Page = () => {
         
         {/* Back Button */}
         <div className="mb-4">
-          <a href="#" className="text-[#3E0070]  text-lg">&larr; Back</a>
+          <a href="#" className="text-[#3E0070] text-lg">&larr; Back</a>
         </div>
 
-        {/* Photo and Upload Button */}
+        {/* Photo */}
         <div className="flex items-center mb-4">
           <div className="w-120 h-80 bg-gray-full rounded-lg overflow-hidden">
-            <img src="/aston.jpg" alt="" className="w-full h-full object-cover" />
-          </div>
-          <div>
-          <button className="bg-[#3E0070] drop-shadow-lg text-white rounded px-3 py-3 text-sm mt-64 ml-5">
-  Upload New Profile Image
-</button>
-
+            <img src="/aston.jpg" alt="Aston" className="w-full h-full object-cover" />
           </div>
         </div>
 
@@ -55,17 +48,6 @@ const Page = () => {
           </div>
         </div>
 
-        {/* Action Buttons and Trash Icon */}
-        <div className="flex justify-between items-center">
-          <div className="text-[#3E0070]  cursor-pointer">
-            <FaTrashAlt size="50" />
-          </div>
-          <div>
-            <button className="text-gray-600 rounded px-4 py-2 mr-2">Cancel</button>
-            <button className="bg-[#3E0070]  text-white rounded px-4 py-2">Save</button>
-          </div>
-        </div>
-        
       </div>
     </div>
   );
