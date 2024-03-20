@@ -1,4 +1,4 @@
-export default function four() {
+export default function Four() {
   return (
     <>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
@@ -8,7 +8,16 @@ export default function four() {
           style={{ width: '350px', height: '400px', marginBottom: '20px' }}
         />
         <h2 className="text-[#abba00] text-3xl italic m text-center">four</h2>
+
       </div>
+       
+       <Mybutton/>
     </>
+
   );
+}
+
+function  Mybutton() {
+  return <button> buuton</button>;
+  
 }
