@@ -16,7 +16,7 @@ export default function Page() {
 function Back() {
     return (
       <>
-        <div class = "mt-10 ml-10">
+        <div className = "mt-10 ml-10">
           <Button colorScheme='black' size='lg' variant='link'>
             <IoIosArrowBack />Back
           </Button>
@@ -28,7 +28,7 @@ function Back() {
 function Ourteam() {
   return (
     <>
-      <div class = "text-5xl font-bold mb-10">
+      <div className = "text-5xl font-bold mb-10">
         <Center bg='' h='100px' color='black'>
           Our Team
         </Center>
@@ -55,12 +55,17 @@ function Allofus() {
   );
 }
 
-function Acard(AA){
-  return (
+interface AcardProps {
+  name: string;
+  position: string;
+}
+
+function Acard({ name, position }: AcardProps){
+  return(
     <>
     <Card maxW='sm'>
       <CardBody>
-        <div class="m-1">
+        <div className="m-1">
           <Image 
             src='./ta.jpg'
             alt='HA'
@@ -68,17 +73,17 @@ function Acard(AA){
             borderRadius='full'
           />
         </div>
-        <div class="mt-10">
+        <div className="mt-10">
           <Center>
             <Heading size='2xl'>
-              {AA.name}
+              {name}
             </Heading>
           </Center>
         </div>
-        <div class="my-5">
+        <div className="my-5">
           <Center>
             <Text fontSize='2xl'>
-              {AA.position}
+              {position}
             </Text>
           </Center>
         </div>
