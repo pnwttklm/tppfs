@@ -1,8 +1,12 @@
+"use client";
 import { Button, Input, Stack, Box, SimpleGrid } from '@chakra-ui/react';
 import { IoSearchCircleSharp } from "react-icons/io5";
 import { FaPhoneAlt } from "react-icons/fa";
 
 export default function Home() {
+  function handleClick(){
+    location.href = 'tel:028889999'
+  }
   return (
     <>
       <div className="flex flex-row">
@@ -17,7 +21,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className='pt-10 text-2xl italic-100 font-extrabold text-center'>Our Cars</div>
+      <div onClick={() => handleClick} className='pt-10 text-2xl italic-100 font-extrabold text-center'>Our Cars</div>
 
       <Search/>
       <ShowCars/>
