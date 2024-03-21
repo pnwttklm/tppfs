@@ -1,15 +1,11 @@
-"use client";
 import { Button, Input, Stack, Box, SimpleGrid } from '@chakra-ui/react';
 import { IoSearchCircleSharp } from "react-icons/io5";
 import { FaPhoneAlt } from "react-icons/fa";
 
 export default function Home() {
-  function handleClick(){
-    location.href = 'tel:028889999'
-  }
   return (
     <>
-      <div className="flex flex-row">
+      <div className="flex flex-row mx-4 my-4">
         <div>
           <img className='pt-10 pl-10 h-625px w-625px'  src="/used-cars-2.jpg.webp" alt="Used Cars" />
         </div>
@@ -21,7 +17,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div onClick={() => handleClick} className='pt-10 text-2xl italic-100 font-extrabold text-center'>Our Cars</div>
+      <div className='pt-10 text-2xl italic-100 font-extrabold text-center'>Our Cars</div>
 
       <Search/>
       <ShowCars/>
@@ -38,9 +34,9 @@ function Search(){
     <>
     <div className='shadow-lg border-1 pb-5 mx-10 rounded-lg'>
         <div className='font-bold text-lg mt-8 ml-6 flex items-center'><IoSearchCircleSharp size="50" className='mr-2' />Search  
-          <div className='ml-4 md:ml-96 flex  flex-col justify-end'>
+          <div className='ml-4 md:ml-96 flex  flex-row justify-end'>
             <Input id="searchInput" placeholder='Search by Name, ID, and More.' boxShadow='md' className='ml-96' width='96' />
-            
+           
           </div>
           
         </div>
@@ -57,14 +53,17 @@ function Search(){
             <div className='flex flex-row pt-4 items-center'> 
               <label htmlFor="fuelType">Fuel Type:</label>
               <Input id="fuelType" className='ml-0.5' boxShadow='md' />
+              
             </div>
           </div>
-          <div className='flex flex-col mr-4 md:mr-20'>
-            <div className='mt-4 md:mt-64 ml-4 mr-4 md:-64 flex flex-row justify-end '>
-              <Button className="bg-[#000000] text-white rounded px-4 py-2 ml-96  pl-96">Search</Button>
-            </div>
-          </div>
+         
+            
+          
         </form>
+        <div className='mt- ml-4 mr-4 flex flex-row justify-end '>
+        <Button className="bg-[#abba00] text-white rounded px-4 py-2 ml-96 mr-16">Search</Button>
+
+            </div>
       </div>
     </>
   );
@@ -75,14 +74,29 @@ function Search(){
 
 function ShowCars() {
   return (
-    <div className='border-1 mt-8 mx-10 rounded-lg'>
-      <SimpleGrid className='my-3 border-2 shadow mx-4 rounded-md ' columns={5} spacing={10}>
+    <div className=' mt-8 mx-10 rounded-lg shadow-2xl' >
+      <SimpleGrid className='my-3 border-1 shadow-4xl px-2 py-2 my-4 rounded-3xl ' columns={5} spacing={0.5}>
         {Cars.map((item, index) => (
-          <div className='border-2 rounded-md shadow-lg mx-4 my-4' key={index}>
-            <img className='w-64 h-48' src={item.Image} alt={item.Brand} />
-            <h1>{item.Brand}</h1>
-            <h1>{item.Color}</h1>
+          <div className='border-1 rounded-3xl shadow-lg  my-0.5 px-2 py-2' key={index}>
+            <img className='w-64 h-48 rounded-lg my-2'  src={item.Image} alt={item.Brand} />
+            <h3 className=' text-[#808080] text-sm'>ID:{item.ID}</h3>
+           
+           
+           <div className='flex flex-row space-x-32 ' >
+            <div className='flex flex-col '>
+              <h1>{item.Brand}</h1>
+              <h1>{item.Color}</h1>
+            </div>
+            <div className='flex flex-col text-[#808080] text-sm'>
+            <h1>{item.ReleaseDate}</h1>
+            <h1>{item.ArriveDate}</h1>
+            </div>
+            </div>
+            <div className='flex flex-row justify-end mr-4'>{item.price}</div>
+
           </div>
+          
+          
         ))}
       </SimpleGrid>
     </div>
@@ -91,15 +105,14 @@ function ShowCars() {
 
 
 const Cars = [
-  { Brand: "tesla", Color: "silver", Image: "/tesla.jpeg" },
-  { Brand: "tesla", Color: "silver", Image: "/tesla.jpeg" },
-  { Brand: "tesla", Color: "silver", Image: "/tesla.jpeg" },
-  { Brand: "tesla", Color: "silver", Image: "/tesla.jpeg" },
-  { Brand: "tesla", Color: "silver", Image: "/tesla.jpeg" },
-  { Brand: "tesla", Color: "silver", Image: "/tesla.jpeg" },
-  { Brand: "tesla", Color: "silver", Image: "/tesla.jpeg" },
-  { Brand: "tesla", Color: "silver", Image: "/tesla.jpeg" }
-  
+  { Brand: "tesla", Color: "silver", Image: "/tesla.jpeg", ID:'tf696969',price: "800k", ArriveDate:"02/02/24" ,ReleaseDate:"01/02/24"},
+  { Brand: "bmw", Color: "white", Image: "/bmw.webp", ID:'ta696969' ,price: "800k",ArriveDate:"02/02/24" ,ReleaseDate:"01/02/24" },
+  { Brand: "tesla", Color: "silver", Image: "/tesla.jpeg", ID:'MM696969' ,price: "800k" , ArriveDate:"02/02/24" ,ReleaseDate:"01/02/24"},
+  { Brand: "TATA", Color: "grey", Image: "/TATAcar.webp", ID:'oo696969' ,price: "800k", ArriveDate:"02/02/24" ,ReleaseDate:"01/02/24"},
+  { Brand: "tesla", Color: "silver", Image: "/tesla.jpeg", ID:'aa696969',price: "800k", ArriveDate:"02/02/24" ,ReleaseDate:"01/02/24"},
+  { Brand: "bmw", Color: "white", Image: "/bmw.webp", ID:'ab696969' ,price: "800k",ArriveDate:"02/02/24" ,ReleaseDate:"01/02/24" },
+  { Brand: "tesla", Color: "silver", Image: "/tesla.jpeg", ID:'ac696969' ,price: "800k" , ArriveDate:"02/02/24" ,ReleaseDate:"01/02/24"},
+  { Brand: "TATA", Color: "grey", Image: "/TATAcar.webp", ID:'ac696969' ,price: "800k", ArriveDate:"02/02/24" ,ReleaseDate:"01/02/24"}
 
 
 
