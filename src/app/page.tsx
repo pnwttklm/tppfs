@@ -61,7 +61,7 @@ function Search(){
           
         </form>
         <div className='mt- ml-4 mr-4 flex flex-row justify-end '>
-        <Button className="bg-[#abba00] text-white rounded px-4 py-2 ml-96 mr-16">Search</Button>
+        <Button colorScheme='black' className=" px-4 py-2 ml-96 mr-16">Search</Button>
 
             </div>
       </div>
