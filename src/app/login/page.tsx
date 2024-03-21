@@ -24,22 +24,9 @@ export default function LoginPage() {
   const handleID = (e:any) => setID(e.target.value)
   const handlePass = (v:any) => setPassword(v.target.value)
   const handleClick = () => setShow(!show)
-//   function doesIdExist() {
-//     const idToCheck = Number(ID);
-//     const user = Users.find(user => user.id === idToCheck);
-//     return user ? user : null;
-//   }
-  function handleSubmit(){
-    // if(doesIdExist() != null){
-    //     if(doesIdExist().password === password){
-    //         location.href = '/login/success/' + doesIdExist().id;
-    //     }else{
-    //         return(alert('Wrong Password'));
-    //     }
-    // }else{
-    //     return(alert('The student ID does not exist'));
-    // }
 
+  function DefaultPage(){
+    return location.href = '/admin';
   }
   
   
@@ -54,7 +41,7 @@ export default function LoginPage() {
                             <InputLeftElement pointerEvents='none'>
                             <BsPerson color='#807A7A' />
                             </InputLeftElement>
-                            <Input placeholder='Username' value={ID} type='number' onChange={handleID} rounded={'2xl'}/>
+                            <Input placeholder='Username' value={ID} type='text' onChange={handleID} rounded={'2xl'}/>
                         </InputGroup>
                         <InputGroup className="mt-8 bg-[#FFFFFF]" size='lg'>
                             <InputLeftElement pointerEvents='none'>
@@ -69,7 +56,7 @@ export default function LoginPage() {
                             </InputRightElement>
                         </InputGroup>
                 </div>
-                    <Button onClick={() => handleSubmit()} className="rounded-full border border-[#3E0070] p-2  text-[#FFFFFF] bg-[#3E0070] hover:bg-[#FFFFFF] hover:text-[#3E0070]" mt={'16'} px={'6'} py={'3'} color={'white'} backgroundColor={'#3E0070'} rounded={'full'}>Login</Button>
+                    <Button onClick={() => DefaultPage()} className="rounded-full border border-[#3E0070] p-2  text-[#FFFFFF] bg-[#3E0070] hover:bg-[#FFFFFF] hover:text-[#3E0070]" mt={'16'} px={'6'} py={'3'} color={'white'} backgroundColor={'#3E0070'} rounded={'full'}>Login</Button>
                 </Center>
             </Center>
       </div>

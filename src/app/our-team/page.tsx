@@ -1,3 +1,5 @@
+"use client";
+import React, { useState } from "react";
 import { Button, Center, Image, Card, CardBody,Stack, Heading, Text } from '@chakra-ui/react'
 import { IoIosArrowBack } from "react-icons/io";
 
@@ -11,19 +13,23 @@ export default function Page() {
     );
   }
 
-
+function Clicked() {
+  return location.href = '/'
+}
 
 function Back() {
     return (
       <>
         <div className = "mt-10 ml-10">
-          <Button colorScheme='black' size='lg' variant='link'>
+          <Button colorScheme='black' size='lg' variant='link' onClick={() => Clicked()}>
             <IoIosArrowBack />Back
           </Button>
         </div>
       </>
     );
 }
+
+
 
 function Ourteam() {
   return (
@@ -47,7 +53,7 @@ function Allofus() {
             <Acard name="Pun" position="FrontEnd"/>
             <Acard name="Poon" position="Leader"/>
             <Acard name="Four" position="FrontEnd"/>
-            <Acard name="Shuii" position="FrontEnd"/>
+            <Acard name="Shuiiy" position="FrontEnd"/>
           </Stack>
         </Center>
       </div>

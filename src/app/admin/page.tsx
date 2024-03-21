@@ -2,9 +2,15 @@
 import React, { useState } from "react";
 import { Center, Checkbox, Button } from "@chakra-ui/react";
 import { BsPersonFillGear, BsDatabaseFillGear } from "react-icons/bs";
+import { Link } from "@chakra-ui/react";
 
+function UserManage() {
+  return location.href = '/user-manage/[slug]';
+}
+function ProdManage(){
+  return location.href = '/product-manage/[slug]';
+}
 export default function Page() {
-  function handleSubmit() {}
   return (
     <div>
       {/*Photo and  Text*/}
@@ -39,7 +45,7 @@ export default function Page() {
               <Center>Manager</Center>
             </div>
             <Button
-              onClick={() => handleSubmit()}
+              onClick={() => UserManage()}
               className="text-xl rounded-full  border border-[#3E0070] text-[#FFFFFF] 
           bg-[#3E0070] hover:bg-[#FFFFFF] hover:text-[#3E0070]"
               mt={"3"}
@@ -68,7 +74,7 @@ export default function Page() {
               <Center>Manager</Center>
             </div>
             <Button
-              onClick={() => handleSubmit()}
+              onClick={() => ProdManage()}
               className="text-xl rounded-full border border-[#3E0070] text-[#FFFFFF] 
           bg-[#3E0070] hover:bg-[#FFFFFF] hover:text-[#3E0070]"
               mt={"3"}
@@ -77,8 +83,7 @@ export default function Page() {
               color={"white"}
               backgroundColor={"#3E0070"}
               rounded={"full"}
-              size="3xl"
-            >
+              size="3xl">
               See More
             </Button>
           </div>
