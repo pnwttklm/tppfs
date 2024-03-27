@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS account (
 
 -- Table: car
 CREATE TABLE IF NOT EXISTS car (
+	image VARCHAR(9999999) NOT NULL, -- image of each car(10 million I think is enough 4k picture is just 2 milion characters)(Why not use 'Max' for length? -On my SQL version cannot do it anymore)
 	brand VARCHAR(20) NOT NULL,
     color VARCHAR(15) NOT NULL,  -- primary color
     type VARCHAR(20),
