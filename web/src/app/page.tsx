@@ -1,5 +1,5 @@
 "use client";
-import { Button, Input, Stack, Box, SimpleGrid } from "@chakra-ui/react";
+import { Button, Input, Link, Stack, Box, SimpleGrid } from "@chakra-ui/react";
 import { IoSearchCircleSharp } from "react-icons/io5";
 import { FaPhoneAlt } from "react-icons/fa";
 import React, { useState } from "react";
@@ -116,8 +116,9 @@ export default function Home() {
       >
         {cars &&
           cars.map((item, index) => (
-            <div
+            <Link
               className="border-1 rounded-3xl shadow-lg  my-0.5 px-2 py-2"
+              href={`/product/${item.product_id}`}
               key={index}
             >
               <img
@@ -138,7 +139,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="flex flex-row justify-end mr-4">{item.price}</div>
-            </div>
+            </Link>
           ))}
       </SimpleGrid>
     </div>

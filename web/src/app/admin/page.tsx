@@ -33,10 +33,10 @@ import { Link } from "@chakra-ui/react";
     });
 
 function UserManage() {
-  return location.href = '/user-manage/[slug]';
+  return location.href = '/user-manage';
 }
 function ProdManage(){
-  return location.href = '/product-manage/[slug]';
+  return location.href = '/product-manage';
 }
 export default function Page() {
   return (

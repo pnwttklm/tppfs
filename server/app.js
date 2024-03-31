@@ -53,6 +53,19 @@ router.get("/api/v1/car", (req, res) => {
   });
 });
 
+router.get("/api/v1/car/:id", (req, res) => {
+    connection.query(
+        `SELECT * FROM car WHERE product_id = ?`,
+        [req.params.id],
+        function (err, results) {
+        if (err) throw err;
+        console.log(results);
+        res.send(results);
+        }
+    );
+});
+
+
 router.post("/api/v1/login", cors(), (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
