@@ -33,35 +33,21 @@ export default function LoginPage() {
   const handleClick = () => setShow(!show);
   const axios = require("axios");
   function DefaultPage() {
-    const axios = require("axios");
-    let data = JSON.stringify({
-      username: String(ID),
-      password: String(password),
-    });
-
-    let config = {
-      method: "post",
-      maxBodyLength: Infinity,
-      url: "http://localhost:3030/api/v1/login",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: data,
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:3030/api/v1/login/${ID}/${password}`); // Replace with your API endpoint
+        const data = await response.json();
+        if(data.pass){
+          location.href = '/admin';
+        }else{
+          alert("Invalid Username or Password");
+        }
+      } catch (error) {
+        console.error('Error fetching car data:', error);
+      }
     };
 
-    axios
-      .request(config)
-      .then((response:any) => {
-        if(response.data.pass===true){
-          window.location.href = "/admin";
-      }
-      else{
-        alert("Invalid Username or Password");
-      }
-    })
-      .catch((error:any) => {
-        console.log(error);
-      });
+    fetchData();
   }
 
   return (

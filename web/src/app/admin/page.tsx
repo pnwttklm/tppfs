@@ -4,41 +4,26 @@ import { Center, Checkbox, Button } from "@chakra-ui/react";
 import { BsPersonFillGear, BsDatabaseFillGear } from "react-icons/bs";
 import { Link } from "@chakra-ui/react";
 
-  const axios = require("axios");
-  let data = JSON.stringify({
-    username: "",
-    password: "",
-  });
-
-  let config = {
-    method: "post",
-    maxBodyLength: Infinity,
-    url: "http://localhost:3030/api/v1/login",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    data: data,
-  };
-
-  axios
-    .request(config)
-    .then((response:any) => {
-      alert(response.data.pass);
-      // if(response.data.pass===false){
-      // window.location.href = "/login";
-    // }
-  })
-    .catch((error:any) => {
-      console.log(error);
-    });
-
 function UserManage() {
-  return location.href = '/user-manage';
+  return (location.href = "/user-manage");
 }
-function ProdManage(){
-  return location.href = '/product-manage';
+function ProdManage() {
+  return (location.href = "/product-manage");
 }
 export default function Page() {
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://localhost:3030/api/v1/checkLogin"); // Replace with your API endpoint
+      const data = await response.json();
+      if (!data.pass) {
+        location.href = "/login";
+      }
+    } catch (error) {
+      // location.href = "/login";
+    }
+  };
+
+  // fetchData();
   return (
     <div>
       {/*Photo and  Text*/}
@@ -111,7 +96,8 @@ export default function Page() {
               color={"white"}
               backgroundColor={"#3E0070"}
               rounded={"full"}
-              size="3xl">
+              size="3xl"
+            >
               See More
             </Button>
           </div>

@@ -5,25 +5,13 @@ const express = require("express");
 const cors = require("cors"); // Import cors middleware
 const app = express();
 const port = process.env.PORT || 3030;
-const path = require("path");
 const router = express.Router();
-var session = require("express-session");
-const store = new session.MemoryStore();
 const cp = require("cookie-parser");
 app.use(cors()); // Use cors middleware
 app.use(router);
 
 router.use(cp());
 
-router.use(
-  session({
-    secret: "your-secret-key",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }, // Adjust as needed for your setup
-    store: store,
-  })
-);
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
@@ -54,21 +42,43 @@ router.get("/api/v1/car", (req, res) => {
 });
 
 router.get("/api/v1/car/:id", (req, res) => {
+  connection.query(
+    `SELECT * FROM car WHERE product_id = ?`,
+    [req.params.id],
+    function (err, results) {
+      if (err) throw err;
+      console.log(results);
+      res.send(results);
+    }
+  );
+});
+
+router.get("/api/v1/getUser/:username", (req, res) => {
+    const username = req.params.username;
     connection.query(
-        `SELECT * FROM car WHERE product_id = ?`,
-        [req.params.id],
-        function (err, results) {
+        `SELECT * FROM account WHERE username = ?`,
+        [username], function (err, results) {
         if (err) throw err;
         console.log(results);
         res.send(results);
-        }
-    );
+    });
+    });
+
+router.get("/api/v1/checkLogin", (req, res) => {
+  // Check if the user is already logged in (cookie exists)
+  if (req.cookies.username && req.cookies.password) {
+    res.json({
+      pass: true,
+      username: req.cookies.username,
+    });
+    return; // Exit the function
+  }
+  res.json({ pass: false, username: null, password: null });
 });
 
-
-router.post("/api/v1/login", cors(), (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
+router.get("/api/v1/login/:username/:password", cors(), (req, res) => {
+  const username = req.params.username;
+  const password = req.params.password;
   connection.query(
     `SELECT COUNT(*) AS count FROM account WHERE username = ? AND password = ?`,
     [username, password],
@@ -77,15 +87,17 @@ router.post("/api/v1/login", cors(), (req, res) => {
         console.error(err);
         return res.status(500).send("Internal Server Error");
       }
-      console.log(String(username));
-      console.log(password);
+      console.log(results);
       if (results[0].count === 1) {
-        req.session.user = {
-            username, password
-        };
-        res.json({pass: true, user: req.session.user});
+        res.cookie("username", String(username));
+        res.cookie("password", String(password));
+        res.json({
+          pass: true,
+          username: String(username),
+          password: String(password),
+        });
       } else {
-        res.json({ pass: false, user: null });
+        res.json({ pass: false, username: null, password: null });
       }
     }
   );
