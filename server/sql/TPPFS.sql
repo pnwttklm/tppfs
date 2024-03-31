@@ -47,7 +47,11 @@ CREATE TABLE IF NOT EXISTS login_infor (
 INSERT INTO car (image, brand, color, type, price, model, engine, fuel_type, distance, max_liter, gear, product_id, license, release_date, arrive_date, datetime, username) VALUES
 ('https://thematter.co/wp-content/uploads/2022/01/content-cover-%E0%B8%A3%E0%B8%96%E0%B9%80%E0%B8%A1%E0%B8%A5%E0%B9%8C%E0%B8%A3%E0%B9%89%E0%B8%AD%E0%B8%99-FB.jpg', 'benz', 'red',  'Rodmay', 3000000,  'Rodgay', 'Smartheart', 'Densilk', '564321', '500', 'M', '245120504837563', '3TR4444', '2011-10-10', '2021-04-11', '2008-11-11' , 'Roymayja'),
 ('https://s.isanook.com/gu/0/ui/1/9156/268671__06122012104637.jpg?ip/crop/w300/q90/webp', 'Rodthai', 'yellow', 'tuktuk', 400000,  'Tuktuk', 'threewheels', 'Bensill', '220222', '80', 'A', '564655314865353', 'สก7131', '2008-09-30', '2023-12-15', null, 'Tuktukbuntuktarn'),
-('https://media.architecturaldigest.com/photos/63079fc7b4858efb76814bd2/16:9/w_4000,h_2250,c_limit/9.%20DeLorean-Alpha-5%20%5BDeLorean%5D.jpg', 'Delorean', 'maroon', 'sport', 20000000, 'buterfly', 'WOKEED', 'Soholl', '80451', '65', 'A', '864512542012642', 'ตต1234', '2023-10-22', '2023-11-20', null, 'RodkongTATA');
+('https://media.architecturaldigest.com/photos/63079fc7b4858efb76814bd2/16:9/w_4000,h_2250,c_limit/9.%20DeLorean-Alpha-5%20%5BDeLorean%5D.jpg', 'Delorean', 'maroon', 'sport', 20000000, 'buterfly', 'WOKEED', 'Soholl', '80451', '65', 'A', '864512542012642', 'ตต1234', '2023-10-22', '2023-11-20', null, 'RodkongTATA'),
+('https://img.kaidee.com/prd/20240326/369344996/m/a0ea8eee-a87b-4c93-a68d-55a21f8c31ce.jpg', 'Honda', 'white', 'sedan', 459000, 'HR-V', '1.8', 'benzene', '90000', '65', 'A', '456', 'ขล 8853', '2016-10-22', '2027-11-20', null, 'uHonta'),
+('https://img.kaidee.com/prd/20240306/368958058/m/2ac86490-e308-4d53-92f1-adb76158c1c6.jpg', 'Mitsubishi', 'black', 'SUV', 359000, 'Pajero Sport', '2.5', 'diesel', '160000', '70', 'A', '122', '2กด 8719', '2013-5-22', '2027-11-23', null, 'Paje'),
+('https://img.kaidee.com/prd/20240321/369319319/m/c5ddfb8a-fe41-4ff5-bcfa-01efd0f67677.jpg', 'Mercedes-Benz', 'white', 'sedan', 799000, 'C-Class', '1.6', 'hybrid', '20000', '65', 'A', '122', '5กต 9215', '2015-5-01', '2027-05-23', null, 'Mer')
+;
 
 
 INSERT INTO account (password, birth_date, lname, fname, email, username, citizen_number, phone_number)
