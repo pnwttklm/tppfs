@@ -4,6 +4,34 @@ import { Center, Checkbox, Button } from "@chakra-ui/react";
 import { BsPersonFillGear, BsDatabaseFillGear } from "react-icons/bs";
 import { Link } from "@chakra-ui/react";
 
+  const axios = require("axios");
+  let data = JSON.stringify({
+    username: "",
+    password: "",
+  });
+
+  let config = {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: "http://localhost:3030/api/v1/login",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: data,
+  };
+
+  axios
+    .request(config)
+    .then((response:any) => {
+      alert(response.data.pass);
+      // if(response.data.pass===false){
+      // window.location.href = "/login";
+    // }
+  })
+    .catch((error:any) => {
+      console.log(error);
+    });
+
 function UserManage() {
   return location.href = '/user-manage/[slug]';
 }

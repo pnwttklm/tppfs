@@ -7,8 +7,23 @@ const app = express();
 const port = process.env.PORT || 3030;
 const path = require("path");
 const router = express.Router();
+var session = require("express-session");
+const store = new session.MemoryStore();
+const cp = require("cookie-parser");
 app.use(cors()); // Use cors middleware
 app.use(router);
+
+router.use(cp());
+
+router.use(
+  session({
+    secret: "your-secret-key",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }, // Adjust as needed for your setup
+    store: store,
+  })
+);
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
@@ -51,9 +66,12 @@ router.post("/api/v1/login", cors(), (req, res) => {
       console.log(String(username));
       console.log(password);
       if (results[0].count === 1) {
-        res.json({ pass: true });
-      }else{
-        res.json({ pass: false });
+        req.session.user = {
+            username, password
+        };
+        res.json({pass: true, user: req.session.user});
+      } else {
+        res.json({ pass: false, user: null });
       }
     }
   );
