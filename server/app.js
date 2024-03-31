@@ -48,6 +48,7 @@ router.get("/", (req, res) => {
 router.get("/api/v1/car", (req, res) => {
   connection.query(`SELECT * FROM car`, function (err, results) {
     if (err) throw err;
+    console.log(results);
     res.send(results);
   });
 });
