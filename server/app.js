@@ -22,8 +22,11 @@ var connection = mysql.createConnection({
   password: process.env.MYSQL_PASSWORD,
   database: process.env.MYSQL_DATABASE,
 });
+
 connection.connect(function (err) {
   if (err) {
+    
+    console.log("ERROR MySQL server.");
     return console.error("error: " + err.message);
   }
   console.log("Connected to the MySQL server.");
