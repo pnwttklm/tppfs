@@ -18,7 +18,7 @@ export default function WithSubnavigation() {
   }
 
   return (
-    <div id="nav" className="z-20 top-0 sticky w-screen h-20 bg-[#FFFFFF] shadow-md flex flex-1 justify-between px-16 place-self-center">
+    <nav id="nav" className="z-20 top-0 sticky w-screen h-20 bg-[#FFFFFF] shadow-md flex flex-1 justify-between px-16 place-self-center">
         <Link href="/" className="item-center flex flex-row place-self-center">
           <Image
             width={200}
@@ -37,7 +37,7 @@ export default function WithSubnavigation() {
                 <h1 className="text-white font-extrabold">Staff Zone</h1>
               </Link>
         </div>
-    </div>
+    </nav>
   );
 }
 

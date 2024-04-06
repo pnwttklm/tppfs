@@ -11,19 +11,22 @@ function ProdManage() {
   return (location.href = "/product-manage");
 }
 export default function Page() {
+  // console.log();
   const fetchData = async () => {
     try {
       const response = await fetch("http://localhost:3030/api/v1/checkLogin"); // Replace with your API endpoint
       const data = await response.json();
-      if (!data.pass) {
-        location.href = "/login";
-      }
+      alert("Data: " + data.pass + " - " + data.username + " - " + data.password);
+      // if (!data.pass) {
+      //   location.href = "/login";
+      // }
     } catch (error) {
       // location.href = "/login";
+      alert(error);
     }
   };
 
-  // fetchData();
+  fetchData();
   return (
     <div>
       {/*Photo and  Text*/}

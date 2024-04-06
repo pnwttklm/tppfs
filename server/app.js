@@ -6,14 +6,23 @@ const cors = require("cors"); // Import cors middleware
 const app = express();
 const port = process.env.PORT || 3030;
 const router = express.Router();
-const cp = require("cookie-parser");
-app.use(cors()); // Use cors middleware
-app.use(router);
+const session = require("express-session");
+const cp= require("cookie-parser");
+
+router.use(session({
+  secret: "secret-key",
+  resave: false,
+  saveUninitialized: true,
+}));
+
 
 router.use(cp());
 
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
+
+app.use(cors()); // Use cors middleware
+app.use(router);
 
 const mysql = require("mysql2");
 var connection = mysql.createConnection({
@@ -69,19 +78,22 @@ router.get("/api/v1/getUser/:username", (req, res) => {
 
 router.get("/api/v1/checkLogin", (req, res) => {
   // Check if the user is already logged in (cookie exists)
-  if (req.cookies.username && req.cookies.password) {
+  console.log("checklogin",req.session.username, req.session.password);
+  if (req.session.username && req.session.password) {
+    
     res.json({
       pass: true,
-      username: req.cookies.username,
+      username: req.session.username,
+      password: req.session.password
     });
     return; // Exit the function
   }
   res.json({ pass: false, username: null, password: null });
 });
 
-router.get("/api/v1/login/:username/:password", cors(), (req, res) => {
-  const username = req.params.username;
-  const password = req.params.password;
+router.post("/api/v1/login/", (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
   connection.query(
     `SELECT COUNT(*) AS count FROM account WHERE username = ? AND password = ?`,
     [username, password],
@@ -92,8 +104,12 @@ router.get("/api/v1/login/:username/:password", cors(), (req, res) => {
       }
       console.log(results);
       if (results[0].count === 1) {
-        res.cookie("username", String(username));
-        res.cookie("password", String(password));
+        req.session.username = username;
+        req.session.password = password;
+        console.log(username, password)
+        //res.cookie["username"] = username;
+        //res.cookie["password"] = password;
+        console.log("login",req.session.username, req.session.password);
         res.json({
           pass: true,
           username: String(username),

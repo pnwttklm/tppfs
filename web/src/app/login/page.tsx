@@ -24,6 +24,12 @@ import {
 import Image from "next/image";
 // import Users from '../../data/users.js';
 
+interface User {
+  pass: boolean,
+  username: string,
+  password: string,
+}
+
 export default function LoginPage() {
   const [show, setShow] = React.useState(false);
   const [ID, setID] = useState("");
@@ -33,21 +39,34 @@ export default function LoginPage() {
   const handleClick = () => setShow(!show);
   const axios = require("axios");
   function DefaultPage() {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`http://localhost:3030/api/v1/login/${ID}/${password}`); // Replace with your API endpoint
-        const data = await response.json();
-        if(data.pass){
-          location.href = '/admin';
-        }else{
-          alert("Invalid Username or Password");
-        }
-      } catch (error) {
-        console.error('Error fetching car data:', error);
-      }
+    const axios = require("axios");
+    let data = JSON.stringify({
+      username: String(ID),
+      password: String(password),
+    });
+
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "http://localhost:3030/api/v1/login",
+      headers: {
+        "Content-Type": "application/json",
+        },
+      data: data,
     };
 
-    fetchData();
+    axios
+      .request(config)
+      .then((response:any) => {
+        if(response.data.pass){
+          location.href = "/admin";
+        }else{
+          alert("Wrong Login Credentials");
+        }
+      })
+      .catch((error:any) => {
+        alert(error)
+      });
   }
 
   return (
