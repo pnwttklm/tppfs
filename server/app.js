@@ -65,6 +65,55 @@ router.get("/api/v1/car/:id", (req, res) => {
   );
 });
 
+router.get("/api/v1/brand", (req, res) => {
+  connection.query(
+    `SELECT DISTINCT(brand) FROM CAR ORDER BY brand;`,
+    function (err, results) {
+      if (err) throw err;
+      console.log(results);
+      res.send(results);
+    }
+  );
+});
+
+router.get("/api/v1/engine", (req, res) => {
+  connection.query(
+    `SELECT DISTINCT(engine) FROM CAR ORDER BY engine;`,
+    function (err, results) {
+      if (err) throw err;
+      console.log(results);
+      res.send(results);
+    }
+  );
+});
+
+router.get("/api/v1/fuel", (req, res) => {
+  connection.query(
+    `SELECT DISTINCT(fuel_type) FROM CAR ORDER BY fuel_type;`,
+    function (err, results) {
+      if (err) throw err;
+      console.log(results);
+      res.send(results);
+    }
+  );
+});
+
+router.post("/api/v1/search", (req, res) => {
+  const model = req.body.model;
+  const brand = req.body.brand;
+  const engine = req.body.engine;
+  const fuel = req.body.fuel;
+  connection.query(
+    `SELECT * FROM CAR WHERE model LIKE "%?%" AND brand LIKE "%?%" AND engine LIKE "%?%" AND fuel_type LIKE "%?%";`,
+    [model, brand, engine, fuel],
+    function (err, results) {
+      if (err) throw err;
+      console.log(results);
+      res.send(results);
+    }
+  );
+});
+
 router.get("/api/v1/getUser/:username", (req, res) => {
     const username = req.params.username;
     connection.query(
