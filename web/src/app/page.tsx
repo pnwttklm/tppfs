@@ -32,6 +32,12 @@ export default function Home() {
   const [brands, setBrands] = useState<string[]>([]);
   const [engine, setEngine] = useState<string[]>([]);
   const [fuel, setFuel] = useState<string[]>([]);
+  const [selectedBrands, setSelectedBrands] = useState();
+  const handleBrands = (event:any) => setSelectedBrands(event.target.value)
+  const [selectedEngine, setSelectedEngine] = useState();
+  const handleEngine = (event:any) => setSelectedEngine(event.target.value)
+  const [selectedFuel, setSelectedFuel] = useState();
+  const handleFuel = (event:any) => setSelectedFuel(event.target.value)
 
 
   useEffect(() => {
@@ -67,7 +73,8 @@ export default function Home() {
   }, []);
 
   function SearchHandle() {
-    fetch("http://localhost:3030/api/v1/car")
+    // alert("http://localhost:3030/api/v1/search?model=" + value + "&brand=" + selectedBrands + "&engine=" + selectedEngine + "&fuel=" + selectedFuel)
+    fetch("http://localhost:3030/api/v1/search?model=" + value + "&brand=" + selectedBrands + "&engine=" + selectedEngine + "&fuel=" + selectedFuel)
       .then((res) => res.json())
       .then((data) => setCars(data));
   }
@@ -116,7 +123,7 @@ export default function Home() {
           <div className="ml-4 md:ml-96 flex  flex-row justify-end">
             <Input
               id="searchInput"
-              placeholder="Search by Name, ID, and More."
+              placeholder="Search by Model"
               onChange={handleChange}
               onClick={() => SearchHandle()}
               boxShadow="md"
@@ -129,7 +136,7 @@ export default function Home() {
           <div className="flex flex-col mt-12">
             <div className="flex flex-row pt-4 pr-3">
               <label htmlFor="brand">Brand:</label>
-              <Select placeholder="Select Brand">
+              <Select placeholder="Select Brand" onChange={handleBrands}>
                 {brands.map((brand) => (
                   <option key={brand} value={brand}>
                     {brand}
@@ -139,7 +146,7 @@ export default function Home() {
             </div>
             <div className="flex flex-row pt-4 pr-3">
               <label htmlFor="engine">Engine:</label>
-              <Select placeholder="Select Engine">
+              <Select placeholder="Select Engine" onChange={handleEngine}>
                 {engine.map((brand) => (
                   <option key={brand} value={brand}>
                     {brand}
@@ -149,7 +156,7 @@ export default function Home() {
             </div>
             <div className="flex flex-row pt-4 items-center">
               <label htmlFor="fuelType">Fuel Type:</label>
-              <Select placeholder="Select Fuel">
+              <Select placeholder="Select Fuel" onChange={handleFuel}>
                 {fuel.map((brand) => (
                   <option key={brand} value={brand}>
                     {brand}

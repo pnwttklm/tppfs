@@ -98,14 +98,33 @@ router.get("/api/v1/fuel", (req, res) => {
   );
 });
 
-router.post("/api/v1/search", (req, res) => {
-  const model = req.body.model;
-  const brand = req.body.brand;
-  const engine = req.body.engine;
-  const fuel = req.body.fuel;
+router.get("/api/v1/search", (req, res) => {
+  const { model, brand, engine, fuel } = req.query;
+  let sql = "SELECT * FROM CAR WHERE 1=1";
+  const params = [];
+
+  if (model!="undefined") {
+    sql += ' AND model LIKE ?';
+    params.push(`%${model}%`);
+  }
+
+  if (brand!="undefined") {
+    sql += ' AND brand LIKE ?';
+    params.push(`%${brand}%`);
+  }
+
+  if (engine!="undefined") {
+    sql += ' AND engine LIKE ?';
+    params.push(`%${engine}%`);
+  }
+
+  if (fuel!="undefined") {
+    sql += ' AND fuel_type LIKE ?';
+    params.push(`%${fuel}%`);
+  }
+  sql += ';'
   connection.query(
-    `SELECT * FROM CAR WHERE model LIKE "%?%" AND brand LIKE "%?%" AND engine LIKE "%?%" AND fuel_type LIKE "%?%";`,
-    [model, brand, engine, fuel],
+    sql, params,
     function (err, results) {
       if (err) throw err;
       console.log(results);
