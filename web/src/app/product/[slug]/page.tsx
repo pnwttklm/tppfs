@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 
 interface Car {
   image: string;
@@ -40,6 +41,18 @@ function Page({ params }: { params: { slug: string } }) {
 
     fetchData(); // Call the fetchData function when the component mounts
   }, []);
+
+  function formatDate(dateString:string) {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+  
+    const formattedDay = day < 10 ? '0' + day : day;
+    const formattedMonth = month < 10 ? '0' + month : month;
+  
+    return `${formattedDay}/${formattedMonth}/${year}`;
+  }
   
   
   return (
@@ -56,10 +69,12 @@ function Page({ params }: { params: { slug: string } }) {
             {/* Photo */}
             <div className="flex items-center mb-4">
               <div className="w-120 h-80 bg-gray-full rounded-lg overflow-hidden">
-                <img
+                <Image
                   src={car.image}
                   alt="Aston"
-                  className="w-full h-full object-cover"
+                  className="w-screen h-full object-cover"
+                  width={480}
+                  height={320}
                 />
               </div>
             </div>
@@ -69,15 +84,15 @@ function Page({ params }: { params: { slug: string } }) {
               <div className="flex-1 pr-2">
                 <InputField label="Product ID" data={car.product_id}/>
                 <InputField label="Brand" data={car.brand}/>
+                <InputField label="Model" data={car.model}/>
                 <InputField label="Quantity" data="1"/>
                 <InputField label="Color" data={car.color}/>
                 <InputField label="Type" data={car.type}/>
-                <InputField label="Price" data={String(car.price)}/>
-                <InputField label="Model" data={car.model}/>
+                <InputField label="Price" data={`฿ ${String(car.price)}`}/>
               </div>
               <div className="flex-1 pl-2">
-                <InputField label="Release Date" data={String(car.release_date)}/>
-                <InputField label="Arrive Date" data={String(car.arrive_date)}/>
+                <InputField label="Release Date" data={formatDate(String(car.release_date))}/>
+                <InputField label="Arrive Date" data={formatDate(String(car.arrive_date))}/>
                 <InputField label="Gear" data={car.gear}/>
                 <InputField label="Distance" data={car.distance}/>
                 <InputField label="License" data={car.license}/>
@@ -94,6 +109,9 @@ function Page({ params }: { params: { slug: string } }) {
                 <InputField label="Max Liter" data={car.max_liter}/>
               </div>
             </div>
+            <a className="bg-black rounded-full py-3 px-6 text-white" href="tel:024410909">
+              Contact Sales
+            </a>
           </>
         )}
       </div>
