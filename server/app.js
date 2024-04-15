@@ -190,6 +190,18 @@ router.post("/api/v1/login/", (req, res) => {
   );
 });
 
+router.delete("/api/v1/car", (req, res) => {
+  const { product_id } = req.body;
+  connection.query(
+    `DELETE FROM car WHERE product_id = ?`,
+    [product_id],
+    function (err, results) {
+      if (err) throw err;
+      console.log(results);
+      res.send(results);
+    });
+});
+
 router.use(function (req, res, next) {
   res.status(404).send("404: Page not Found");
 });
