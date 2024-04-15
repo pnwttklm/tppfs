@@ -8,6 +8,7 @@ import {
   SimpleGrid,
   Select,
   CardFooter,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { IoSearchCircleSharp } from "react-icons/io5";
 import React, { useState, useEffect } from "react";
@@ -48,6 +49,8 @@ export default function Page() {
   const handleEngine = (event: any) => setSelectedEngine(event.target.value);
   const [selectedFuel, setSelectedFuel] = useState();
   const handleFuel = (event: any) => setSelectedFuel(event.target.value);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   function formatDate(dateString: string) {
     const date = new Date(dateString);
@@ -138,9 +141,9 @@ export default function Page() {
         Search Product
       </div>
       <div className="flex flex-row justify-end mr-16">
-        <button>
+        <a href="/product-manage/add">
           <IoAddCircle size="40" />
-        </button>
+        </a>
       </div>
       <div className="shadow-lg border-1 pb-5 mx-10 rounded-lg p-6">
         <div className="font-bold text-lg mt-8 ml-6 flex items-center justify-between">
@@ -212,7 +215,7 @@ export default function Page() {
         {cars &&
           cars.map((item, index) => (
             <Card className="rounded-2xl" size="md" key={index}>
-              <a href={`/product-manage/${item.product_id}`} key={index}>
+              <a href={`/product-manage/edit/${item.product_id}`} key={index}>
                 <CardHeader className="relative h-[256px]">
                   <Image
                     src={item.image}
@@ -248,7 +251,9 @@ export default function Page() {
                 <Button backgroundColor={"red.500"} color={"white"} onClick={() => DeleteCar(String(item.product_id))}>
                   <BsTrash3></BsTrash3>
                 </Button>
+                <a href={`/product-manage/edit/${item.product_id}`}>
                 <Button>Edit</Button>
+                </a>
               </CardFooter>
             </Card>
           ))}
