@@ -200,8 +200,14 @@ router.delete("/api/v1/car", (req, res) => {
     }
   );
 });
-
+function formatDate(dateString){
+  const date = new Date(dateString);
+  const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+  console.log(formattedDate); // 2016-10-22
+  return formattedDate;
+}
 router.post("/api/v1/car", (req, res) => {
+  
   const car = req.body.car;
   connection.query(
     `INSERT INTO car (image, brand, color, type, price, model, engine, fuel_type, distance, max_liter, gear, product_id, license, release_date, arrive_date, datetime, username) VALUES (?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
@@ -219,15 +225,41 @@ router.post("/api/v1/car", (req, res) => {
       car.gear,
       car.product_id,
       car.license,
-      car.release_date,
-      car.arrive_date,
+      formatDate(car.release_date),
+      formatDate(car.arrive_date),
       car.datetime,
       car.username,
     ],
     function (err, results) {
-      if (err) res.send(err);
+      if (err){
+        console.error(err);
+        res.send(false);
+      };
       console.log(results);
-      res.send(results);
+      res.send(true);
+    }
+  );
+});
+
+router.put("/api/v1/car", (req, res) => {
+  const car = req.body.car;
+  car.release_date = formatDate(car.release_date);
+  car.arrive_date = formatDate(car.arrive_date);
+  connection.query(
+    `UPDATE car
+    SET ?
+    WHERE product_id = ?;`,
+    [
+      car,
+      car.product_id,
+    ],
+    function (err, results) {
+      if (err){
+        console.error(err);
+        res.send(false);
+      };
+      console.log(results);
+      res.send(true);
     }
   );
 });
