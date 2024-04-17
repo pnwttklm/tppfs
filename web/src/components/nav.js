@@ -28,7 +28,7 @@ export default function WithSubnavigation() {
             alt="logo-navbar"
           />
         </Link>
-        <div className="flex mr-4 collapse md:visible place-self-center gap-3">
+        <section className="flex mr-4 collapse md:visible place-self-center gap-3">
               <Link p={2} href={"/our-team"}>
                 <h1 className="font-extrabold text-[#3E0070]">Our Team</h1>
               </Link>
@@ -36,7 +36,7 @@ export default function WithSubnavigation() {
                 <BsPersonVcard size={28} color="#FFFFFF" /> 
                 <h1 className="text-white font-extrabold">Staff Zone</h1>
               </Link>
-        </div>
+        </section>
     </nav>
   );
 }
