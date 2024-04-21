@@ -1,9 +1,18 @@
 "use client";
-import { Button, Input, Link, Stack, Box, SimpleGrid, Select,InputGroup,InputLeftElement } from "@chakra-ui/react";
-import { IoSearchCircleSharp } from "react-icons/io5";
+import {
+  Button,
+  Input,
+  Link,
+  Stack,
+  Box,
+  SimpleGrid,
+  Select,
+  InputGroup,
+  InputLeftElement,
+} from "@chakra-ui/react";
+import { IoSearchCircleSharp, IoAddCircle } from "react-icons/io5";
 import React, { useState, useEffect } from "react";
-import { FaTrashAlt  } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
+import { BsPen, BsChevronUp, BsChevronDown, BsTrash3 } from "react-icons/bs";
 import URL from "../../data/url";
 interface User {
   citizen_number: string;
@@ -19,22 +28,24 @@ interface User {
 export default function Home() {
   const initialUsers: User[] = [];
   const [users, setUsers] = useState<User[]>(initialUsers);
-  const [value, setValue] = useState('')
-  const handleChange = (event:any) => setValue(event.target.value)
-  
-  const [brands, setBrands] = useState<string[]>([]);
-  const [engine, setEngine] = useState<string[]>([]);
-  const [fuel, setFuel] = useState<string[]>([]);
-  const [selectedBrand, setSelectedBrand] = useState<string | undefined>();
-  const handleBrandChange = (event:any) => setSelectedBrand(event.target.value)
-  const [selectedEngine, setSelectedEngine] = useState<string | undefined>();
-  const handleEngineChange = (event:any) => setSelectedEngine(event.target.value)
-  const [selectedFuel, setSelectedFuel] = useState<string | undefined>();
-  const handleFuelChange = (event:any) => setSelectedFuel(event.target.value)
+
+  const [name, setName] = useState<string | undefined>();
+  const handleNameChange = (event: any) => setName(event.target.value);
+
+  const [startAge, setStartAge] = useState(0);
+  const handleStartChange = (event: any) => setStartAge(event.target.value);
+  const [endAge, setEndAge] = useState(100);
+  const handleEndChange = (event: any) => setEndAge(event.target.value);
+
+  const [email, setEmail] = useState<string | undefined>();
+  const handleEmailChange = (event: any) => setEmail(event.target.value);
+  const [tel, setTel] = useState<string | undefined>();
+  const handleTelChange = (event: any) => setTel(event.target.value);
 
   function handleSearch() {
-    
-    fetch(`http://localhost:3030/api/v1/search?model=${value}&brand=${selectedBrand}&engine=${selectedEngine}&fuel=${selectedFuel}`)
+    fetch(
+      `${URL()}/api/v1/discover?name=${name}&startAge=${startAge}&endAge=${endAge}&email=${email}&tel=${tel}`
+    )
       .then((res) => res.json())
       .then((data) => setUsers(data));
   }
@@ -44,9 +55,14 @@ export default function Home() {
       <div className="pt-10 text-2xl italic-100 font-extrabold text-center">
         Search user
       </div>
-
+      <div className="flex flex-row justify-end mr-16">
+        <a href="/user-mange/add">
+          <IoAddCircle size="40" />
+        </a>
+      </div>
       <div className="shadow-lg border-1 pb-5 mx-10 rounded-lg p-6">
         <div className="font-bold text-lg mt-8 ml-6 flex items-center justify-between">
+
           <div className="flex row">
             <IoSearchCircleSharp size="50" className="mr-2" />
             Search
@@ -54,9 +70,8 @@ export default function Home() {
           <div className="ml-4 md:ml-96 flex  flex-row justify-end">
             <Input
               id="searchInput"
-              placeholder="Search by name, username and more"
-              onChange={handleChange}
-              onClick={handleSearch}
+              placeholder="Search by Firstname or Lastname"
+              onChange={handleNameChange}
               boxShadow="md"
               className=""
               width="96"
@@ -66,43 +81,39 @@ export default function Home() {
         <form className="flex flex-row  mr-4 md:mr-10 ml-6">
           <div className="flex flex-col mt-12">
             <div className="flex flex-row pt-4 pr-8 mx-1">
-              <label className="mr-8" >Age between:</label>   
-              <Input width="60px"
+              <label className="mr-8">Age between:</label>
+              <Input
+                width="60px"
                 type="number"
                 rounded={"md"}
-              />:
-             <Input
-               
-               width="60px"
-               type="number"
-               
-               rounded={"md"}
-             />
+                onChange={handleStartChange}
+              />
+              :
+              <Input
+                width="60px"
+                type="number"
+                rounded={"md"}
+                onChange={handleEndChange}
+              />
             </div>
-            <div className="flex flex-col pt-4 pr-3">
-              <label >Last login between:</label>
-              
-              <Input width="200px"
-                type="Date"
+            <div className="flex flex-row pt-4 pr-3">
+              <label>Email:</label>
+
+              <Input
+                width="200px"
                 rounded={"md"}
                 className="mb-2"
+                onChange={handleEmailChange}
               />
-             <Input
-               width="200px"
-               type="Date"
-               
-               rounded={"md"}
-             />
-             
             </div>
             <div className="flex flex-row pt-4 items-center">
-              <label> Telephone Country:</label>
+              <label> Telephone: </label>
               <Input
-               width="200px"
-               type="string"
-               
-               rounded={"md"}
-             />
+                width="200px"
+                type="string"
+                rounded={"md"}
+                onChange={handleTelChange}
+              />
             </div>
           </div>
         </form>
@@ -116,44 +127,43 @@ export default function Home() {
           </Button>
         </div>
       </div>
-      <div className=" mt-8 mx-10 rounded-lg shadow-2xl">
-        <SimpleGrid
-          className="my-3 border-1 shadow-4xl px-2 py-2 rounded-3xl "
-          columns={1}
-          spacing={0.5}
-        >
-          {users.map((u, index) => (
-            <Link
-            className="border-1 rounded-3xl shadow-lg my-0.5  flex flex-row"
-            href={`/user/${u.min_age}`}
-            key={index}
-          >
-            <div className="flex items-center">
-              <img
-                className="w-20 h-20 rounded-full my-2"
-                src={u.image}
-                alt={u.username}
-              />
-          
-              <div className="flex flex-col ml-4">
-              <h1>{u.username}</h1>
-               {/* <h1>{u.fname}</h1> */}
-                {/* <h1>{u.lname}</h1> */}
+      <SimpleGrid
+        className="my-3 border-1 shadow-4xl px-2 py-2 rounded-3xl m-12"
+        columns={1}
+        spacing={3}
+      >
+        {users.map((prop, index) => (
+          <>
+            <div
+              key={index}
+              className="flex flex-row bg-[#FFFFFF] shadow-2xl rounded-2xl p-3 justify-between content-center"
+            >
+              <div className="flex flex-row gap-3">
+                <h1 className="text-lg font-bold">{prop.username}</h1>
+                <h1 className="pl-3">{prop.fname}</h1>
+                <h1 className="pl-2">{prop.lname}</h1>
+                <h1 className="pl-3">{prop.email}</h1>
+              </div>
+              <div className="content-center">
+                <div className="content-center">
+                  <Button gap={2} mr={3}>
+                    <BsPen />
+                    Edit
+                  </Button>
+                  <Button
+                    colorScheme={"red"}
+                    // onClick={() => handleRemove(item.id)}
+                    rounded={"full"}
+                    paddingX={-1}
+                  >
+                    <BsTrash3 />
+                  </Button>
+                </div>
               </div>
             </div>
-          
-            <div className="ml-auto mr-4  flex items-center">
-              <Button size="20" className="rounded-xl p-2 text-[#000000] mr-3 text-md">
-                <MdEdit size="20" />
-                Edit
-              </Button>
-              <FaTrashAlt className="text-white bg-red-500 rounded-full p-1" size="30" />
-            </div>
-          </Link>
-          
-          ))}
-        </SimpleGrid>
-      </div>
+          </>
+        ))}
+      </SimpleGrid>
     </>
   );
 }

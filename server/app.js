@@ -274,17 +274,17 @@ router.post("/api/v1/login/", (req, res) => {
 
 // Section C: Users
 router.get("/api/v1/user", (req, res) => {
-  connection.query(`SELECT * FROM car`, function (err, results) {
+  connection.query(`SELECT * FROM account`, function (err, results) {
     if (err) console.log(err);
     console.log(results);
     res.send(results);
   });
 });
 
-router.get("/api/v1/user/:id", (req, res) => {
+router.get("/api/v1/user/:username", (req, res) => {
   connection.query(
-    `SELECT * FROM car WHERE product_id = ?`,
-    [req.params.id],
+    `SELECT * FROM account WHERE username = ?`,
+    [req.params.username],
     function (err, results) {
       if (err) console.log(err);
       console.log(results);
@@ -295,30 +295,36 @@ router.get("/api/v1/user/:id", (req, res) => {
 
 
 router.get("/api/v1/discover", (req, res) => {
-  const { model, brand, engine, fuel } = req.query;
-  let sql = "SELECT * FROM CAR WHERE 1=1";
+  const { name, startAge, endAge, email, tel } = req.query;
+  let sql = "SELECT * FROM account WHERE 1=1";
   const params = [];
 
-  if (model != "undefined") {
-    sql += " AND model LIKE ?";
-    params.push(`%${model}%`);
+  if (name != "undefined") {
+    sql += " AND CONCAT(fname, lname) LIKE ?";
+    params.push(`%${name}%`);
   }
 
-  if (brand != "undefined") {
-    sql += " AND brand LIKE ?";
-    params.push(`%${brand}%`);
+  if (startAge != "undefined") {
+    sql += " AND (YEAR(NOW()) - YEAR(birth_date)) >= ?";
+    params.push(`${startAge}`);
   }
 
-  if (engine != "undefined") {
-    sql += " AND engine LIKE ?";
-    params.push(`%${engine}%`);
+  if (endAge != 0) {
+    sql += " AND (YEAR(NOW()) - YEAR(birth_date)) <= ?";
+    params.push(`${endAge}`);
   }
 
-  if (fuel != "undefined") {
-    sql += " AND fuel_type LIKE ?";
-    params.push(`%${fuel}%`);
+  if (email != "undefined") {
+    sql += " AND email LIKE ?";
+    params.push(`%${email}%`);
+  }
+
+  if (tel != "undefined") {
+    sql += " AND phone_number LIKE ?";
+    params.push(`%${tel}%`);
   }
   sql += ";";
+  console.log(sql, params);
   connection.query(sql, params, function (err, results) {
     if (err) console.log(err);
     console.log(results);
@@ -340,10 +346,10 @@ router.get("/api/v1/getUser/:username", (req, res) => {
 });
 
 router.delete("/api/v1/user", (req, res) => {
-  const { product_id } = req.body;
+  const { username } = req.body;
   connection.query(
-    `DELETE FROM car WHERE product_id = ?`,
-    [product_id],
+    `DELETE FROM account WHERE username = ?`,
+    [username],
     function (err, results) {
       if (err) console.log(err);
       console.log(results);

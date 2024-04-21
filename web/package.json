@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "on": "npm run dev --turbo",
+    "on": "npm run dev -- -p 8001 --turbo",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
