@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Center, Checkbox, Button } from "@chakra-ui/react";
 import { BsPersonFillGear, BsDatabaseFillGear } from "react-icons/bs";
-import { Link } from "@chakra-ui/react";
+import URL from "../../data/url";
 
 function UserManage() {
   return (location.href = "/user-manage");
@@ -14,15 +14,15 @@ export default function Page() {
   // console.log();
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:3030/api/v1/checkLogin"); // Replace with your API endpoint
+      const response = await fetch(URL() + "/api/v1/checkLogin"); // Replace with your API endpoint
       const data = await response.json();
-      alert("Data: " + data.pass + " - " + data.username + " - " + data.password);
-      // if (!data.pass) {
+      // alert("Data: " + data.pass + " - " + data.username + " - " + data.password);
+      // // if (!data.pass) {
       //   location.href = "/login";
       // }
     } catch (error) {
       // location.href = "/login";
-      alert(error);
+      // alert(error);
     }
   };
 
@@ -31,12 +31,6 @@ export default function Page() {
     <div>
       {/*Photo and  Text*/}
       <Center className="grid grid-cols-3 gap-32">
-        <Center>
-          <img
-            src="/car.jpeg"
-            className="rounded-full flex w-30 h-30 border-4 mt-10 ml-30"
-          ></img>
-        </Center>
         <div className="flex flex-row">
           <div className="font-bold text-7xl text-center mt-20">
             <Center>Welcome</Center>

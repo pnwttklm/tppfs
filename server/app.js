@@ -4,7 +4,7 @@ dotenv.config();
 const express = require("express");
 const cors = require("cors"); // Import cors middleware
 const app = express();
-const port = process.env.PORT || 3030;
+const port = process.env.PORT || 8101;
 const router = express.Router();
 const session = require("express-session");
 const cp = require("cookie-parser");
@@ -42,12 +42,14 @@ connection.connect(function (err) {
 });
 
 router.get("/", (req, res) => {
-  res.send("hello world, the server is running!");
+  res.send("Hello World, the server is running!");
 });
+
+// Section A: Cars
 
 router.get("/api/v1/car", (req, res) => {
   connection.query(`SELECT * FROM car`, function (err, results) {
-    if (err) throw err;
+    if (err) console.log(err);
     console.log(results);
     res.send(results);
   });
@@ -58,7 +60,7 @@ router.get("/api/v1/car/:id", (req, res) => {
     `SELECT * FROM car WHERE product_id = ?`,
     [req.params.id],
     function (err, results) {
-      if (err) throw err;
+      if (err) console.log(err);
       console.log(results);
       res.send(results);
     }
@@ -69,7 +71,7 @@ router.get("/api/v1/brand", (req, res) => {
   connection.query(
     `SELECT DISTINCT(brand) FROM CAR ORDER BY brand;`,
     function (err, results) {
-      if (err) throw err;
+      if (err) console.log(err);
       console.log(results);
       res.send(results);
     }
@@ -80,7 +82,7 @@ router.get("/api/v1/engine", (req, res) => {
   connection.query(
     `SELECT DISTINCT(engine) FROM CAR ORDER BY engine;`,
     function (err, results) {
-      if (err) throw err;
+      if (err) console.log(err);
       console.log(results);
       res.send(results);
     }
@@ -91,7 +93,7 @@ router.get("/api/v1/fuel", (req, res) => {
   connection.query(
     `SELECT DISTINCT(fuel_type) FROM CAR ORDER BY fuel_type;`,
     function (err, results) {
-      if (err) throw err;
+      if (err) console.log(err);
       console.log(results);
       res.send(results);
     }
@@ -124,7 +126,7 @@ router.get("/api/v1/search", (req, res) => {
   }
   sql += ";";
   connection.query(sql, params, function (err, results) {
-    if (err) throw err;
+    if (err) console.log(err);
     console.log(results);
     res.send(results);
   });
@@ -136,13 +138,95 @@ router.get("/api/v1/getUser/:username", (req, res) => {
     `SELECT * FROM account WHERE username = ?`,
     [username],
     function (err, results) {
-      if (err) throw err;
+      if (err) console.log(err);
       console.log(results);
       res.send(results);
     }
   );
 });
 
+router.delete("/api/v1/car", (req, res) => {
+  const { product_id } = req.body;
+  connection.query(
+    `DELETE FROM car WHERE product_id = ?`,
+    [product_id],
+    function (err, results) {
+      if (err) console.log(err);
+      console.log(results);
+      res.send(results);
+    }
+  );
+});
+function formatDate(dateString){
+  const date = new Date(dateString);
+  const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+  console.log(formattedDate); // 2016-10-22
+  return formattedDate;
+}
+router.post("/api/v1/car", (req, res) => {
+  
+  const car = req.body.car;
+  connection.query(
+    `INSERT INTO car (image, brand, color, type, price, model, engine, fuel_type, distance, max_liter, gear, product_id, license, release_date, arrive_date, datetime, username) VALUES (?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [
+      car.image,
+      car.brand,
+      car.color,
+      car.type,
+      car.price,
+      car.model,
+      car.engine,
+      car.fuel_type,
+      car.distance,
+      car.max_liter,
+      car.gear,
+      car.product_id,
+      car.license,
+      formatDate(car.release_date),
+      formatDate(car.arrive_date),
+      car.datetime,
+      car.username,
+    ],
+    function (err, results) {
+      if (err){
+        console.error(err);
+        // Send an error response to the client
+        return res.status(500).send("An error occurred while updating the car.");
+      };
+      console.log(results);
+      // Send a success response to the client
+      res.send("Car updated successfully.");
+    }
+  );
+});
+
+
+router.put("/api/v1/car", (req, res) => {
+  const car = req.body.car;
+  car.release_date = formatDate(car.release_date);
+  car.arrive_date = formatDate(car.arrive_date);
+  connection.query(
+    `UPDATE car
+    SET ?
+    WHERE product_id = ?;`,
+    [
+      car,
+      car.product_id,
+    ],
+    function (err, results) {
+      if (err){
+        console.error(err);
+        // Send an error response to the client
+        return res.status(500).send("An error occurred while updating the car.");
+      };
+      console.log(results);
+      // Send a success response to the client
+      res.send("Car updated successfully.");
+    }
+  );
+});
+
+// Section B: Login
 router.get("/api/v1/checkLogin", (req, res) => {
   // Check if the user is already logged in (cookie exists)
   console.log("checklogin", req.session.username, req.session.password);
@@ -188,13 +272,80 @@ router.post("/api/v1/login/", (req, res) => {
   );
 });
 
-router.delete("/api/v1/car", (req, res) => {
+// Section C: Users
+router.get("/api/v1/user", (req, res) => {
+  connection.query(`SELECT * FROM car`, function (err, results) {
+    if (err) console.log(err);
+    console.log(results);
+    res.send(results);
+  });
+});
+
+router.get("/api/v1/user/:id", (req, res) => {
+  connection.query(
+    `SELECT * FROM car WHERE product_id = ?`,
+    [req.params.id],
+    function (err, results) {
+      if (err) console.log(err);
+      console.log(results);
+      res.send(results);
+    }
+  );
+});
+
+
+router.get("/api/v1/discover", (req, res) => {
+  const { model, brand, engine, fuel } = req.query;
+  let sql = "SELECT * FROM CAR WHERE 1=1";
+  const params = [];
+
+  if (model != "undefined") {
+    sql += " AND model LIKE ?";
+    params.push(`%${model}%`);
+  }
+
+  if (brand != "undefined") {
+    sql += " AND brand LIKE ?";
+    params.push(`%${brand}%`);
+  }
+
+  if (engine != "undefined") {
+    sql += " AND engine LIKE ?";
+    params.push(`%${engine}%`);
+  }
+
+  if (fuel != "undefined") {
+    sql += " AND fuel_type LIKE ?";
+    params.push(`%${fuel}%`);
+  }
+  sql += ";";
+  connection.query(sql, params, function (err, results) {
+    if (err) console.log(err);
+    console.log(results);
+    res.send(results);
+  });
+});
+
+router.get("/api/v1/getUser/:username", (req, res) => {
+  const username = req.params.username;
+  connection.query(
+    `SELECT * FROM account WHERE username = ?`,
+    [username],
+    function (err, results) {
+      if (err) console.log(err);
+      console.log(results);
+      res.send(results);
+    }
+  );
+});
+
+router.delete("/api/v1/user", (req, res) => {
   const { product_id } = req.body;
   connection.query(
     `DELETE FROM car WHERE product_id = ?`,
     [product_id],
     function (err, results) {
-      if (err) throw err;
+      if (err) console.log(err);
       console.log(results);
       res.send(results);
     }
@@ -206,7 +357,7 @@ function formatDate(dateString){
   console.log(formattedDate); // 2016-10-22
   return formattedDate;
 }
-router.post("/api/v1/car", (req, res) => {
+router.post("/api/v1/user", (req, res) => {
   
   const car = req.body.car;
   connection.query(
@@ -233,15 +384,18 @@ router.post("/api/v1/car", (req, res) => {
     function (err, results) {
       if (err){
         console.error(err);
-        res.send(false);
+        // Send an error response to the client
+        return res.status(500).send("An error occurred while updating the car.");
       };
       console.log(results);
-      res.send(true);
+      // Send a success response to the client
+      res.send("Car updated successfully.");
     }
   );
 });
 
-router.put("/api/v1/car", (req, res) => {
+
+router.put("/api/v1/user", (req, res) => {
   const car = req.body.car;
   car.release_date = formatDate(car.release_date);
   car.arrive_date = formatDate(car.arrive_date);
@@ -256,14 +410,18 @@ router.put("/api/v1/car", (req, res) => {
     function (err, results) {
       if (err){
         console.error(err);
-        res.send(false);
+        // Send an error response to the client
+        return res.status(500).send("An error occurred while updating the car.");
       };
       console.log(results);
-      res.send(true);
+      // Send a success response to the client
+      res.send("Car updated successfully.");
     }
   );
 });
 
+
+// Appendix
 router.use(function (req, res, next) {
   res.status(404).send("404: Page not Found");
 });

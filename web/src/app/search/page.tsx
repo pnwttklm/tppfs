@@ -12,6 +12,7 @@ import { IoSearchCircleSharp } from "react-icons/io5";
 import { FaPhoneAlt } from "react-icons/fa";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import URL from "../../data/url";
 
 interface Car {
   image: string;
@@ -60,7 +61,7 @@ export default function Page() {
     }
   
     useEffect(() => {
-        fetch("http://localhost:3030/api/v1/brand")
+        fetch(URL() + "/api/v1/brand")
           .then((res) => res.json())
           .then((ress) => {
             const brandsArray: string[] = ress.map(
@@ -70,7 +71,7 @@ export default function Page() {
           })
           .catch((error) => console.error("Error fetching brands:", error));
     
-        fetch("http://localhost:3030/api/v1/engine")
+        fetch(URL() + "/api/v1/engine")
           .then((res) => res.json())
           .then((ress) => {
             const enginesArray: string[] = ress.map(
@@ -80,7 +81,7 @@ export default function Page() {
           })
           .catch((error) => console.error("Error fetching engines:", error));
     
-        fetch("http://localhost:3030/api/v1/fuel")
+        fetch(URL() + "/api/v1/fuel")
           .then((res) => res.json())
           .then((ress) => {
             const fuelArray: string[] = ress.map(
@@ -92,7 +93,7 @@ export default function Page() {
       }, []);
     function SearchHandle() {
         fetch(
-          "http://localhost:3030/api/v1/search?model=" +
+            URL() + "/api/v1/search?model=" +
             value +
             "&brand=" +
             selectedBrands +

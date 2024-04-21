@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import URL from "../../../data/url";
 
 interface Car {
   image: string;
@@ -31,7 +32,7 @@ function Page({ params }: { params: { slug: string } }) {
       try {
         // Fetch car data asynchronously
         const response = await fetch(
-          `http://localhost:3030/api/v1/car/${slug}`
+          `${URL()}/api/v1/car/${slug}`
         ); // Replace with your API endpoint
         const data = await response.json();
         // console.log(data[0]);

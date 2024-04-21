@@ -3,6 +3,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Button, Input } from "@chakra-ui/react";
+import URL from "../../../../data/url";
 interface Car {
   image: string;
   brand: string;
@@ -50,7 +51,7 @@ function Page({ params }: { params: { slug: string } }) {
       try {
         // Fetch car data asynchronously
         const response = await fetch(
-          `http://localhost:3030/api/v1/car/${slug}`
+          `${URL()}/api/v1/car/${slug}`
         ); // Replace with your API endpoint
         const data = await response.json();
         // console.log(data[0]);
@@ -72,7 +73,7 @@ function Page({ params }: { params: { slug: string } }) {
     let config = {
       method: "put",
       maxBodyLength: Infinity,
-      url: "http://localhost:3030/api/v1/car",
+      url: URL() + "/api/v1/car",
       headers: {
         "Content-Type": "application/json",
       },
@@ -83,10 +84,12 @@ function Page({ params }: { params: { slug: string } }) {
       .request(config)
       .then((response: any) => {
         console.log(response);
-        alert(response);
+        if (response) alert("Saved Successfully");
+        window.location.href = "/product-manage";
       })
       .catch((error: any) => {
         console.log(error);
+        alert("Error Saving");
       });
   }
 
@@ -95,7 +98,7 @@ function Page({ params }: { params: { slug: string } }) {
       <div className="bg-white p-6 rounded-3xl shadow-lg drop-shadow-lg w-full max-w-4xl">
         {/* Back Button */}
         <div className="mb-4">
-          <a href="#" className="text-[#3E0070]  text-lg">
+          <a href="/product-manage" className="text-[#3E0070]  text-lg">
             &larr; Back
           </a>
         </div>
@@ -125,7 +128,7 @@ function Page({ params }: { params: { slug: string } }) {
             />
             <InputField
               label="Product ID"
-              type="string"
+              type="locked"
               property="product_id"
               car={car}
               setCar={setCar}
@@ -288,24 +291,39 @@ function InputField({
     return (
       <div className="mb-2">
         <label className="block text-gray-700 text-sm font-bold mb-1">
-          {label} <a className="text-[#FE0000]">(MM/DD/YYYY)</a>: 
+          {label} <a className="text-[#FE0000]">(MM/DD/YYYY)</a>:
         </label>
-          <Input
-            type="date"
-            onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            value={formattedDate}
-            isRequired={true}
-          />
+        <Input
+          type="date"
+          onChange={handleChange}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          value={formattedDate}
+          isRequired={true}
+        />
       </div>
     );
-  }
-
-  return (
-    <div className="mb-2">
-      <label className="block text-gray-700 text-sm font-bold mb-1">
-        {label}:
-      </label>
+  } else if (type === "locked") {
+    return (
+      <div className="mb-2">
+        <label className="block text-gray-700 text-sm font-bold mb-1">
+          {label}:
+        </label>
+        <Input
+          type="text"
+          isDisabled={true}
+          onChange={handleChange}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          value={String(car[property])}
+          isRequired={true}
+        />
+      </div>
+    );
+  } else {
+    return (
+      <div className="mb-2">
+        <label className="block text-gray-700 text-sm font-bold mb-1">
+          {label}:
+        </label>
         <Input
           type="text"
           onChange={handleChange}
@@ -313,8 +331,9 @@ function InputField({
           value={String(car[property])}
           isRequired={true}
         />
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
 export default Page;

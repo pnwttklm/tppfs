@@ -2,6 +2,7 @@
 import { Card, CardHeader, CardBody, SimpleGrid } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import URL from '../data/url';
 
 interface Car {
   image: string;
@@ -24,6 +25,8 @@ interface Car {
 }
 
 export default function Home() {
+  const dotenv = require("dotenv");
+  dotenv.config();
   const initialCars: Car[] = [];
   const [cars, setCars] = useState<Car[]>(initialCars);
   const [value, setValue] = React.useState("");
@@ -39,7 +42,7 @@ export default function Home() {
 
     return `${formattedDay}/${formattedMonth}/${year}`;
   }
-  fetch("http://localhost:3030/api/v1/search?model=&brand=&engine=&fuel=")
+  fetch(`${URL()}/api/v1/search?model=&brand=&engine=&fuel=`)
     .then((res) => {
       if (!res.ok) {
         throw new Error("Network response was not ok");

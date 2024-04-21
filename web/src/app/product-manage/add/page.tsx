@@ -3,6 +3,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Button, Input } from "@chakra-ui/react";
+import URL from "../../../data/url";
 interface Car {
   image: string;
   brand: string;
@@ -47,13 +48,13 @@ function Page() {
   function AddCar(car: Car) {
     const axios = require("axios");
     let data = JSON.stringify({
-     car
+      car,
     });
 
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://localhost:3030/api/v1/car",
+      url: URL() + "/api/v1/car",
       headers: {
         "Content-Type": "application/json",
       },
@@ -64,10 +65,11 @@ function Page() {
       .request(config)
       .then((response: any) => {
         console.log(response);
-        alert(response);
+        if (response) alert("Added Successfully");
+        window.location.href = "/product-manage";
       })
       .catch((error: any) => {
-        console.log(error);
+        alert("Error Adding Car");
       });
   }
 
@@ -76,7 +78,7 @@ function Page() {
       <div className="bg-white p-6 rounded-3xl shadow-lg drop-shadow-lg w-full max-w-4xl">
         {/* Back Button */}
         <div className="mb-4">
-          <a href="#" className="text-[#3E0070]  text-lg">
+          <a href="/product-manage" className="text-[#3E0070]  text-lg">
             &larr; Back
           </a>
         </div>
@@ -163,7 +165,7 @@ function Page() {
               setCar={setCar}
             />
             <InputField
-              label="Gear"
+              label="Gear (A/M/O)"
               type="string"
               property="gear"
               car={car}
@@ -221,10 +223,19 @@ function Page() {
             {/* <FaTrashAlt size="50" /> */}
           </div>
           <div>
-            <a href={'/product-manage'} className="text-gray-600 rounded px-4 py-2 mr-2">
+            <a
+              href={"/product-manage"}
+              className="text-gray-600 rounded px-4 py-2 mr-2"
+            >
               Cancel
             </a>
-            <Button className="bg-[#3E0070]  text-white rounded px-4 py-2" onClick={() => AddCar(car)} background={'#3E0070'} color={'#FFFFFF'} type="submit">
+            <Button
+              className="bg-[#3E0070]  text-white rounded px-4 py-2"
+              onClick={() => AddCar(car)}
+              background={"#3E0070"}
+              color={"#FFFFFF"}
+              type="submit"
+            >
               Save
             </Button>
           </div>
@@ -254,10 +265,11 @@ function InputField({
 
   return (
     <div className="mb-2">
-      <label className="block text-gray-700 text-sm font-bold mb-1">
-        {label}:
-      </label>
       {type === "datetime" ? (
+        <div className="mb-2">
+          <label className="block text-gray-700 text-sm font-bold mb-1">
+            {label} <a className="text-[#FE0000]">(MM/DD/YYYY)</a>:
+          </label>
           <Input
             type="date"
             onChange={handleChange}
@@ -265,7 +277,13 @@ function InputField({
             value={car[property]?.toString()}
             isRequired={true}
           />
-        ) : (
+        </div>
+      ) : (
+        <>
+          <label className="block text-gray-700 text-sm font-bold mb-1">
+            {label}:
+          </label>
+
           <Input
             type="text"
             onChange={handleChange}
@@ -273,7 +291,8 @@ function InputField({
             value={String(car[property])}
             isRequired={true}
           />
-        )}
+        </>
+      )}
     </div>
   );
 }

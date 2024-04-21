@@ -4,14 +4,16 @@ import { IoSearchCircleSharp } from "react-icons/io5";
 import React, { useState, useEffect } from "react";
 import { FaTrashAlt  } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
+import URL from "../../data/url";
 interface User {
-  image: string;
-  min_age: number;
-  max_age: number;
-  birth_date: Date;
+  citizen_number: string;
   username: string;
+  email: string;
   fname: string;
   lname: string;
+  birth_date: Date;
+  password: string;
+  phone_number: string;
 }
 
 export default function Home() {
@@ -29,21 +31,6 @@ export default function Home() {
   const handleEngineChange = (event:any) => setSelectedEngine(event.target.value)
   const [selectedFuel, setSelectedFuel] = useState<string | undefined>();
   const handleFuelChange = (event:any) => setSelectedFuel(event.target.value)
-
-  useEffect(() => {
-    fetch("http://localhost:3030/api/v1/brand")
-      .then((res) => res.json())
-      .then((ress) => {
-        const brandsArray: string[] = ress.map(
-          (item: { brand: string }) => item.brand
-        );
-        setBrands(brandsArray);
-      })
-      .catch((error) => console.error("Error fetching brands:", error));
-
-      
-      
-  }, []);
 
   function handleSearch() {
     

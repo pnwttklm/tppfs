@@ -21,8 +21,7 @@ import {
   BsEyeFill,
   BsEyeSlashFill,
 } from "react-icons/bs";
-import Image from "next/image";
-// import Users from '../../data/users.js';
+import URL from "../../data/url";
 
 interface User {
   pass: boolean,
@@ -48,7 +47,7 @@ export default function LoginPage() {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://localhost:3030/api/v1/login",
+      url: URL() + "/api/v1/login",
       headers: {
         "Content-Type": "application/json",
         },
