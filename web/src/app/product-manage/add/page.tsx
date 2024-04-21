@@ -24,9 +24,9 @@ interface Car {
   username: string;
 }
 
-export default function Check({ params }: { params: { slug: string } }) {
+export default function Check() {
   if(localStorage.getItem('Status')){
-    return Page(params.slug);
+    return Page();
   }else{
     alert("You have to log in first to access the product management page.");
     location.href = "/login";
