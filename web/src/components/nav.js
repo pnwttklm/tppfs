@@ -27,7 +27,23 @@ export default function WithSubnavigation() {
                 <BsPersonVcard size={28} color="#FFFFFF" /> 
                 <h1 className="text-white font-extrabold">Staff Zone</h1>
               </Link>
+              <Log_out />
         </section>
     </nav>
   );
+}
+
+function Log_out() {
+  if(localStorage.getItem('Status')){
+    return(
+      <Link className="bg-[#3E0070] rounded-full px-4 py-3 flex flex-row gap-2" href="\login" onClick={(e) => {
+        // e.preventDefault(); // Prevent default navigation behavior
+        localStorage.removeItem('Status');
+        alert("Logged out");
+      }}>
+        <h1 className="text-white font-extrabold">Log out</h1>
+      </Link>
+    );
+  }
+  return;
 }

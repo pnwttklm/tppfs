@@ -24,6 +24,15 @@ interface Car {
   username: string;
 }
 
+export default function Check({ params }: { params: { slug: string } }) {
+  if(localStorage.getItem('Status')){
+    return Page(params.slug);
+  }else{
+    alert("You have to log in first to access the product management page.");
+    location.href = "/login";
+  }
+}
+
 function Page() {
   const [car, setCar] = useState<Car>({
     image: "",
@@ -231,7 +240,14 @@ function Page() {
             </a>
             <Button
               className="bg-[#3E0070]  text-white rounded px-4 py-2"
-              onClick={() => AddCar(car)}
+              onClick={() => {
+                if(localStorage.getItem('Status')){
+                  AddCar(car)
+                }else{
+                  alert("You have to log in first to add the product.");
+                  location.href = "/login";
+                }
+              }}
               background={"#3E0070"}
               color={"#FFFFFF"}
               type="submit"
@@ -297,4 +313,3 @@ function InputField({
   );
 }
 
-export default Page;

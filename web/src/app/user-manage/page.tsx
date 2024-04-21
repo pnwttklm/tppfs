@@ -16,7 +16,17 @@ interface User {
   phone_number: string;
 }
 
-export default function Home() {
+export default function Check(){
+  if(localStorage.getItem('Status')){
+    return Home();
+  }else{
+    alert("You have to log in first to access the user management page.");
+    location.href = "/login";
+  }
+}
+
+
+function Home() {
   const initialUsers: User[] = [];
   const [users, setUsers] = useState<User[]>(initialUsers);
   const [value, setValue] = useState('')

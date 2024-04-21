@@ -29,7 +29,15 @@ interface User {
   password: string,
 }
 
-export default function LoginPage() {
+export default function Check(){
+  if(localStorage.getItem('Status')){
+    location.href = "/admin";
+  }else{
+    return LoginPage();
+  }
+}
+
+function LoginPage() {
   const [show, setShow] = React.useState(false);
   const [ID, setID] = useState("");
   const [password, setPassword] = useState("");
@@ -58,6 +66,7 @@ export default function LoginPage() {
       .request(config)
       .then((response:any) => {
         if(response.data.pass){
+          localStorage.setItem("Status", "Admin");
           location.href = "/admin";
         }else{
           alert("Wrong Login Credentials");
