@@ -200,6 +200,42 @@ router.post("/api/v1/car", (req, res) => {
   );
 });
 
+// router.post("/api/v1/login_time", (req, res) => {
+  
+//   const car = req.body.car;
+//   connection.query(
+//     `INSERT INTO car (image, brand, color, type, price, model, engine, fuel_type, distance, max_liter, gear, product_id, license, release_date, arrive_date, datetime, username) VALUES (?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+//     [
+//       car.image,
+//       car.brand,
+//       car.color,
+//       car.type,
+//       car.price,
+//       car.model,
+//       car.engine,
+//       car.fuel_type,
+//       car.distance,
+//       car.max_liter,
+//       car.gear,
+//       car.product_id,
+//       car.license,
+//       formatDate(car.release_date),
+//       formatDate(car.arrive_date),
+//       car.datetime,
+//       car.username,
+//     ],
+//     function (err, results) {
+//       if (err){
+//         console.error(err);
+//         // Send an error response to the client
+//         return res.status(500).send("An error occurred while updating the car.");
+//       };
+//       console.log(results);
+//       // Send a success response to the client
+//       res.send("Car updated successfully.");
+//     }
+//   );
+// });
 
 router.put("/api/v1/car", (req, res) => {
   const car = req.body.car;
