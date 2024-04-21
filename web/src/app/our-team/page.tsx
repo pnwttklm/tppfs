@@ -1,35 +1,16 @@
 "use client";
 import React, { useState } from "react";
-import { Button, Center, Image, Card, CardBody,Stack, Heading, Text } from '@chakra-ui/react'
-import { IoIosArrowBack } from "react-icons/io";
+import { Button, Center, Card, CardBody,Stack, Heading, Text } from '@chakra-ui/react'
+import Image from 'next/image'
 
 export default function Page() {
     return (
       <>
-        <Back />
         <Ourteam />
         <Allofus />
       </>
     );
   }
-
-function Clicked() {
-  return location.href = '/'
-}
-
-function Back() {
-    return (
-      <>
-        <div className = "mt-10 ml-10">
-          <Button colorScheme='black' size='lg' variant='link' onClick={() => Clicked()}>
-            <IoIosArrowBack />Back
-          </Button>
-        </div>
-      </>
-    );
-}
-
-
 
 function Ourteam() {
   return (
@@ -49,11 +30,11 @@ function Allofus() {
       <div className="border border-gray bg-white p-6 rounded-3xl shadow-lg drop-shadow-lg md:w-auto mx-10">
         <Center>
           <Stack spacing={8} direction='row'>
-            <Acard name="TATA" position="BackEnd" pic = "./TATA.jpg"/>
-            <Acard name="Pun" position="FrontEnd" pic = "./pun.jpg"/>
-            <Acard name="Poon" position="Leader" pic = "./poon.jpg"/>
-            <Acard name="Four" position="FrontEnd" pic = "./4.jpg"/>
-            <Acard name="Shuiiy" position="FrontEnd" pic = "./Shuii.jpg"/>
+            <Acard name="TATA" position="BackEnd" pic = "/TATA.jpg"/>
+            <Acard name="Pun" position="FrontEnd" pic = "/pun.jpg"/>
+            <Acard name="Poon" position="BackEnd" pic = "/poon.jpg"/>
+            <Acard name="Four" position="FrontEnd" pic = "/4.jpg"/>
+            <Acard name="Shuiiy" position="FrontEnd" pic = "/Shuii.jpg"/>
           </Stack>
         </Center>
       </div>
@@ -76,8 +57,9 @@ function Acard({ name, position, pic}: AcardProps){
           <Image 
             src={pic}
             alt='HA'
-            boxSize='280px'
-            borderRadius='full'
+            width='200'
+            height='200'
+            className="rounded-full"
           />
         </div>
         <div className="mt-10">

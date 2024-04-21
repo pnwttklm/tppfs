@@ -3,6 +3,7 @@ import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import Nav from '../components/nav'
+import Footer from '../components/footer'
 
 const inter = JetBrains_Mono({ weight: ['100','200','300','400','500','600','700', '800'], subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default function RootLayout({
         <Providers>
           <Nav/>
           {children}
+          <Footer/>
           </Providers>
       </body>
     </html>
