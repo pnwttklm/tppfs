@@ -365,53 +365,43 @@ function formatDate(dateString){
 }
 router.post("/api/v1/user", (req, res) => {
   
-  const car = req.body.car;
+  const user = req.body.user;
   connection.query(
-    `INSERT INTO car (image, brand, color, type, price, model, engine, fuel_type, distance, max_liter, gear, product_id, license, release_date, arrive_date, datetime, username) VALUES (?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO account (password, birth_date, lname, fname, email, username, citizen_number, phone_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
     [
-      car.image,
-      car.brand,
-      car.color,
-      car.type,
-      car.price,
-      car.model,
-      car.engine,
-      car.fuel_type,
-      car.distance,
-      car.max_liter,
-      car.gear,
-      car.product_id,
-      car.license,
-      formatDate(car.release_date),
-      formatDate(car.arrive_date),
-      car.datetime,
-      car.username,
+      user.password,
+      formatDate(user.birth_date),
+      user.lname,
+      user.fname,
+      user.email,
+      user.username,
+      user.citizen_number,
+      user.phone_number,
     ],
     function (err, results) {
       if (err){
         console.error(err);
         // Send an error response to the client
-        return res.status(500).send("An error occurred while updating the car.");
+        return res.status(500).send("An error occurred while updating the user.");
       };
       console.log(results);
       // Send a success response to the client
-      res.send("Car updated successfully.");
+      res.send("User updated successfully.");
     }
   );
 });
 
 
 router.put("/api/v1/user", (req, res) => {
-  const car = req.body.car;
-  car.release_date = formatDate(car.release_date);
-  car.arrive_date = formatDate(car.arrive_date);
+  const user = req.body.user;
+  user.birth_date = formatDate(user.birth_date);
   connection.query(
-    `UPDATE car
+    `UPDATE account
     SET ?
-    WHERE product_id = ?;`,
+    WHERE username = ?;`,
     [
-      car,
-      car.product_id,
+      user,
+      user.username,
     ],
     function (err, results) {
       if (err){

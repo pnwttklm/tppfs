@@ -75,14 +75,20 @@ export default function Home() {
         console.log(error);
       });
   }
-
+  const calculateAge = (dob:Date) => {
+    if (!dob) return -1; // Exit early if dob is not set
+    
+    const today = new Date();
+    const birthDate = new Date(dob);
+    return(today.getFullYear() - birthDate.getFullYear());
+  };
   return (
     <>
       <div className="pt-10 text-2xl italic-100 font-extrabold text-center">
         Search user
       </div>
       <div className="flex flex-row justify-end mr-16">
-        <a href="/user-mange/add">
+        <a href="/user-manage/add">
           <IoAddCircle size="40" />
         </a>
       </div>
@@ -169,6 +175,7 @@ export default function Home() {
                 <h1 className="pl-3">{prop.fname}</h1>
                 <h1 className="pl-2">{prop.lname}</h1>
                 <h1 className="pl-3">{prop.email}</h1>
+                <h1 className="pl-3">Age: {calculateAge(prop.birth_date)}</h1>
               </div>
               <div className="content-center">
                 <div className="content-center">
