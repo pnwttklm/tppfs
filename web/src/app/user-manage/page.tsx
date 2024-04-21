@@ -50,6 +50,32 @@ export default function Home() {
       .then((data) => setUsers(data));
   }
 
+  function DeleteUser(username: string) {
+    const axios = require("axios");
+    let data = JSON.stringify({
+      username: String(username),
+    });
+
+    let config = {
+      method: "delete",
+      maxBodyLength: Infinity,
+      url: URL() + "/api/v1/user",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then((response: any) => {
+        handleSearch();
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+  }
+
   return (
     <>
       <div className="pt-10 text-2xl italic-100 font-extrabold text-center">
@@ -139,7 +165,7 @@ export default function Home() {
               className="flex flex-row bg-[#FFFFFF] shadow-2xl rounded-2xl p-3 justify-between content-center"
             >
               <div className="flex flex-row gap-3">
-                <h1 className="text-lg font-bold">{prop.username}</h1>
+                <h1 className="text-lg font-bold ml-6">{prop.username}</h1>
                 <h1 className="pl-3">{prop.fname}</h1>
                 <h1 className="pl-2">{prop.lname}</h1>
                 <h1 className="pl-3">{prop.email}</h1>
@@ -152,7 +178,7 @@ export default function Home() {
                   </Button>
                   <Button
                     colorScheme={"red"}
-                    // onClick={() => handleRemove(item.id)}
+                    onClick={() => DeleteUser(prop.username)}
                     rounded={"full"}
                     paddingX={-1}
                   >
