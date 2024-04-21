@@ -36,7 +36,17 @@ interface Car {
   username: string;
 }
 
-export default function Page() {
+export default function Check(){
+  if(localStorage.getItem('Status')){
+    return Page();
+  }else{
+    alert("You have to log in first to access the product management page.");
+    location.href = "/login";
+  }
+}
+
+
+function Page() {
   const initialCars: Car[] = [];
   const [cars, setCars] = useState<Car[]>(initialCars);
   const [value, setValue] = React.useState("");
@@ -141,10 +151,15 @@ export default function Page() {
       <div className="mx-6 my-6 flex flex-row justify-center text-5xl text-[#000000] italic-100 font-extrabold mt-32">
         Search Product
       </div>
-      <div className="flex flex-row justify-end mr-16">
-        <a href="/product-manage/add">
+      <div className="flex flex-row justify-end mr-16" onClick={() => {
+                  if(localStorage.getItem('Status')){
+                    location.href = "/product-manage/add";
+                  }else{
+                    alert("You have to log in first to add the product.");
+                    location.href = "/login";
+                  }
+                }}>
           <IoAddCircle size="40" />
-        </a>
       </div>
       <div className="shadow-lg border-1 pb-5 mx-10 rounded-lg p-6">
         <div className="font-bold text-lg mt-8 ml-6 flex items-center justify-between">
@@ -216,8 +231,14 @@ export default function Page() {
         {cars &&
           cars.map((item, index) => (
             <Card className="rounded-2xl" size="md" key={index}>
-              <a href={`/product-manage/edit/${item.product_id}`} key={index}>
-                <CardHeader className="relative h-[256px]">
+                <CardHeader className="relative h-[256px]" onClick={() => {
+                  if(localStorage.getItem('Status')){
+                    location.href = `/product-manage/edit/${item.product_id}`;
+                  }else{
+                    alert("You have to log in first to edit the product.");
+                    location.href = "/login";
+                  }
+                }}>
                   <Image
                     src={item.image}
                     alt={item.brand}
@@ -227,7 +248,14 @@ export default function Page() {
                     className="rounded-t-2xl"
                   />
                 </CardHeader>
-                <CardBody className="relative">
+                <CardBody className="relative" onClick={() => {
+                  if(localStorage.getItem('Status')){
+                    location.href = `/product-manage/edit/${item.product_id}`;
+                  }else{
+                    alert("You have to log in first to edit the product.");
+                    location.href = "/login";
+                  }
+                }}>
                   <h3 className=" text-[#808080] text-sm">
                     ID:{item.product_id}
                   </h3>
@@ -247,14 +275,25 @@ export default function Page() {
                     {`฿ ${String(item.price)}`}
                   </div>
                 </CardBody>
-              </a>
               <CardFooter className="flex flex-row justify-between">
-                <Button backgroundColor={"red.500"} color={"white"} onClick={() => DeleteCar(String(item.product_id))}>
+                <Button backgroundColor={"red.500"} color={"white"} onClick={() => {
+                  if(localStorage.getItem('Status')){
+                    DeleteCar(String(item.product_id))
+                  }else{
+                    alert("You have to log in first to delete the product.");
+                    location.href = "/login";
+                  }
+                }}>
                   <BsTrash3></BsTrash3>
                 </Button>
-                <a href={`/product-manage/edit/${item.product_id}`}>
-                <Button>Edit</Button>
-                </a>
+                <Button onClick={() => {
+                  if(localStorage.getItem('Status')){
+                    location.href = `/product-manage/edit/${item.product_id}`;
+                  }else{
+                    alert("You have to log in first to edit the product.");
+                    location.href = "/login";
+                  }
+                }}>Edit</Button>
               </CardFooter>
             </Card>
           ))}

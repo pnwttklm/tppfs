@@ -4,13 +4,24 @@ import { Center, Checkbox, Button } from "@chakra-ui/react";
 import { BsPersonFillGear, BsDatabaseFillGear } from "react-icons/bs";
 import URL from "../../data/url";
 
+export default function Check(){
+  if(localStorage.getItem('Status')){
+    return Page();
+  }else{
+    alert("You have to log in first to access the admin page.");
+    location.href = "/login";
+  }
+}
+
+
+
 function UserManage() {
   return (location.href = "/user-manage");
 }
 function ProdManage() {
   return (location.href = "/product-manage");
 }
-export default function Page() {
+function Page() {
   // console.log();
   const fetchData = async () => {
     try {
