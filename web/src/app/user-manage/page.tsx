@@ -177,7 +177,7 @@ function Home() {
         spacing={3}
       >
         {users.map((prop, index) => (
-          <>
+          
             <div
               key={index}
               className="flex flex-row bg-[#FFFFFF] shadow-2xl rounded-2xl p-3 justify-between content-center"
@@ -206,7 +206,6 @@ function Home() {
                 </div>
               </div>
             </div>
-          </>
         ))}
       </SimpleGrid>
     </>

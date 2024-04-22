@@ -69,7 +69,7 @@ router.get("/api/v1/car/:id", (req, res) => {
 
 router.get("/api/v1/brand", (req, res) => {
   connection.query(
-    `SELECT DISTINCT(brand) FROM CAR ORDER BY brand;`,
+    `SELECT DISTINCT(brand) FROM car ORDER BY brand;`,
     function (err, results) {
       if (err) console.log(err);
       console.log(results);
@@ -80,7 +80,7 @@ router.get("/api/v1/brand", (req, res) => {
 
 router.get("/api/v1/engine", (req, res) => {
   connection.query(
-    `SELECT DISTINCT(engine) FROM CAR ORDER BY engine;`,
+    `SELECT DISTINCT(engine) FROM car ORDER BY engine;`,
     function (err, results) {
       if (err) console.log(err);
       console.log(results);
@@ -91,7 +91,7 @@ router.get("/api/v1/engine", (req, res) => {
 
 router.get("/api/v1/fuel", (req, res) => {
   connection.query(
-    `SELECT DISTINCT(fuel_type) FROM CAR ORDER BY fuel_type;`,
+    `SELECT DISTINCT(fuel_type) FROM car ORDER BY fuel_type;`,
     function (err, results) {
       if (err) console.log(err);
       console.log(results);
@@ -102,7 +102,7 @@ router.get("/api/v1/fuel", (req, res) => {
 
 router.get("/api/v1/search", (req, res) => {
   const { model, brand, engine, fuel } = req.query;
-  let sql = "SELECT * FROM CAR WHERE 1=1";
+  let sql = "SELECT * FROM car WHERE 1=1";
   const params = [];
 
   if (model != "undefined") {
