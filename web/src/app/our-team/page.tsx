@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Button, Center, Card, CardBody,Stack, Heading, Text } from '@chakra-ui/react'
 import Image from 'next/image'
+import Link from "next/link";
 
 export default function Page() {
     return (
@@ -30,11 +31,12 @@ function Allofus() {
       <div className="border border-gray bg-white p-6 rounded-3xl shadow-lg drop-shadow-lg md:w-auto mx-10">
         <Center>
           <Stack spacing={8} direction='row'>
-            <Acard name="TATA" position="BackEnd" pic = "/TATA.jpg"/>
-            <Acard name="Pun" position="FrontEnd" pic = "/pun.jpg"/>
-            <Acard name="Poon" position="BackEnd" pic = "/poon.jpg"/>
-            <Acard name="Four" position="FrontEnd" pic = "/4.jpg"/>
-            <Acard name="Shuiiy" position="FrontEnd" pic = "/Shuii.jpg"/>
+
+            <Link href="/TATA"><Acard name="TATA" position="BackEnd" pic = "/TATA.jpg"/></Link>
+            <Link href="/pun"><Acard name="Pun" position="FrontEnd" pic = "/pun.jpg"/></Link>
+            <Link href="/poon"><Acard name="Poon" position="BackEnd" pic = "/poon.jpg"/></Link>
+            <Link href="/four"><Acard name="Four" position="FrontEnd" pic = "/4.jpg"/></Link>
+            <Link href="/shui"><Acard name="Shuiiy" position="FrontEnd" pic = "/Shuii.jpg"/></Link>
           </Stack>
         </Center>
       </div>
