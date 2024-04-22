@@ -25,11 +25,8 @@ interface Car {
 }
 
 export default function Home() {
-  const dotenv = require("dotenv");
-  dotenv.config();
   const initialCars: Car[] = [];
   const [cars, setCars] = useState<Car[]>(initialCars);
-  const [value, setValue] = React.useState("");
 
   function formatDate(dateString: string) {
     const date = new Date(dateString);

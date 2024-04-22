@@ -67,6 +67,7 @@ function LoginPage() {
       .then((response:any) => {
         if(response.data.pass){
           localStorage.setItem("Status", "Admin");
+          localStorage.setItem("Username", response.data.username);
           location.href = "/admin";
         }else{
           alert("Wrong Login Credentials");
