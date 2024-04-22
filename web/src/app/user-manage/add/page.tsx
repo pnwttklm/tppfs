@@ -2,6 +2,7 @@
 import { BsEyeSlashFill, BsEyeFill } from "react-icons/bs";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import Checker from "../../../data/check";
 import {
   Button,
   Input,

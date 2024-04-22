@@ -40,8 +40,8 @@ CREATE TABLE IF NOT EXISTS car (
 -- Table: login_infor
 CREATE TABLE IF NOT EXISTS login_infor (
 	datetime DATETIME NOT NULL,  -- The date and time of logining in at that moment
-    username VARCHAR(20) NOT NULL REFERENCES account(username), -- User that login
-    CONSTRAINT PK_username PRIMARY KEY (username) -- Make username also be PK after being only FK at the previous line
+    username VARCHAR(20) NOT NULL REFERENCES account(username) -- User that login
+     -- CONSTRAINT PK_username PRIMARY KEY (username) -- Make username also be PK after being only FK at the previous line
 );
 
 INSERT INTO car (image, brand, color, type, price, model, engine, fuel_type, distance, max_liter, gear, product_id, license, release_date, arrive_date, datetime, username) VALUES

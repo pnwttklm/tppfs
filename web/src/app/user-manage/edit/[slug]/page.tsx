@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Button, Input } from "@chakra-ui/react";
 import URL from "../../../../data/url";
+import Checker from "../../../../data/check";
 interface Car {
   image: string;
   brand: string;

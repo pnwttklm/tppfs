@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Button, Input } from "@chakra-ui/react";
 import URL from "../../../data/url";
+import Checker from "../../../data/check";
 interface Car {
   image: string;
   brand: string;
@@ -25,7 +26,7 @@ interface Car {
 }
 
 export default function Check() {
-  if(localStorage.getItem('Status')){
+  if(Checker()){
     return Page();
   }else{
     alert("You have to log in first to access the product management page.");
@@ -241,7 +242,7 @@ function Page() {
             <Button
               className="bg-[#3E0070]  text-white rounded px-4 py-2"
               onClick={() => {
-                if(localStorage.getItem('Status')){
+                if(Checker()){
                   AddCar(car)
                 }else{
                   alert("You have to log in first to add the product.");

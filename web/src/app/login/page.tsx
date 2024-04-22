@@ -22,6 +22,7 @@ import {
   BsEyeSlashFill,
 } from "react-icons/bs";
 import URL from "../../data/url";
+import Checker from "../../data/check";
 
 interface User {
   pass: boolean,
@@ -30,12 +31,19 @@ interface User {
 }
 
 export default function Check(){
-  if(localStorage.getItem('Status')){
+  if(Checker()){
     location.href = "/admin";
   }else{
     return LoginPage();
   }
 }
+
+interface Time {
+  datetime: Date | null,
+  username: string,
+}
+
+
 
 function LoginPage() {
   const [show, setShow] = React.useState(false);
@@ -45,6 +53,36 @@ function LoginPage() {
   const handlePass = (v: any) => setPassword(v.target.value);
   const handleClick = () => setShow(!show);
   const axios = require("axios");
+
+  function Addlogin(time: Date, username: string) {
+    const axios = require("axios");
+    let data = JSON.stringify({
+      time: time,
+      username: username,
+    });
+    // alert(data);
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: URL() + "/api/v1/login_time",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+  
+    axios
+      .request(config)
+      .then((response: any) => {
+        console.log(response);
+        if (response) console.log("Time Added Successfully");
+      })
+      .catch((error: any) => {
+        console.log("Error Adding Time login" + error);
+        alert("Error Adding Time login" + error);
+      });
+  }
+
   function DefaultPage() {
     const axios = require("axios");
     let data = JSON.stringify({
@@ -61,14 +99,16 @@ function LoginPage() {
         },
       data: data,
     };
-
     axios
       .request(config)
       .then((response:any) => {
         if(response.data.pass){
+          Addlogin(new Date(), response.data.username);
           localStorage.setItem("Status", "Admin");
           localStorage.setItem("Username", response.data.username);
-          location.href = "/admin";
+          setTimeout(() => {
+            window.location.href = "/admin";
+          }, 1000);
         }else{
           alert("Wrong Login Credentials");
         }

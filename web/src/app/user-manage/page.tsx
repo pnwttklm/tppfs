@@ -25,8 +25,10 @@ interface User {
   phone_number: string;
 }
 
+import Checker from "../../data/check";
+
 export default function Check(){
-  if(localStorage.getItem('Status')){
+  if(Checker()){
     return Home();
   }else{
     alert("You have to log in first to access the user management page.");
@@ -189,7 +191,7 @@ function Home() {
               </div>
               <div className="content-center">
                 <div className="content-center">
-                  <Button gap={2} mr={3}>
+                  <Button gap={2} mr={3} onClick={() => location.href = `/user-manage/edit/${prop.username}`}>
                     <BsPen />
                     Edit
                   </Button>

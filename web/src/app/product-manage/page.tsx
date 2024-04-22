@@ -16,6 +16,7 @@ import Image from "next/image";
 import { IoAddCircle } from "react-icons/io5";
 import { BsTrash3 } from "react-icons/bs";
 import URL from "../../data/url";
+import Checker from "../../data/check";
 interface Car {
   image: string;
   brand: string;
@@ -37,7 +38,7 @@ interface Car {
 }
 
 export default function Check(){
-  if(localStorage.getItem('Status')){
+  if(Checker()){
     return Page();
   }else{
     alert("You have to log in first to access the product management page.");
@@ -152,7 +153,7 @@ function Page() {
         Search Product
       </div>
       <div className="flex flex-row justify-end mr-16" onClick={() => {
-                  if(localStorage.getItem('Status')){
+                  if(Checker()){
                     location.href = "/product-manage/add";
                   }else{
                     alert("You have to log in first to add the product.");
@@ -232,7 +233,7 @@ function Page() {
           cars.map((item, index) => (
             <Card className="rounded-2xl" size="md" key={index}>
                 <CardHeader className="relative h-[256px]" onClick={() => {
-                  if(localStorage.getItem('Status')){
+                  if(Checker()){
                     location.href = `/product-manage/edit/${item.product_id}`;
                   }else{
                     alert("You have to log in first to edit the product.");
@@ -249,7 +250,7 @@ function Page() {
                   />
                 </CardHeader>
                 <CardBody className="relative" onClick={() => {
-                  if(localStorage.getItem('Status')){
+                  if(Checker()){
                     location.href = `/product-manage/edit/${item.product_id}`;
                   }else{
                     alert("You have to log in first to edit the product.");
@@ -277,7 +278,7 @@ function Page() {
                 </CardBody>
               <CardFooter className="flex flex-row justify-between">
                 <Button backgroundColor={"red.500"} color={"white"} onClick={() => {
-                  if(localStorage.getItem('Status')){
+                  if(Checker()){
                     DeleteCar(String(item.product_id))
                   }else{
                     alert("You have to log in first to delete the product.");
@@ -287,7 +288,7 @@ function Page() {
                   <BsTrash3></BsTrash3>
                 </Button>
                 <Button onClick={() => {
-                  if(localStorage.getItem('Status')){
+                  if(Checker()){
                     location.href = `/product-manage/edit/${item.product_id}`;
                   }else{
                     alert("You have to log in first to edit the product.");
