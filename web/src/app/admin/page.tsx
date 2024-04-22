@@ -3,9 +3,10 @@ import React, {useState, useEffect} from "react";
 import { Center, Checkbox, Button } from "@chakra-ui/react";
 import { BsPersonFillGear, BsDatabaseFillGear } from "react-icons/bs";
 import URL from "../../data/url";
+import Checker from "../../data/check";
 
 export default function Check() {
-  if (localStorage.getItem("Status")) {
+  if (Checker()) {
     return Page();
   } else {
     alert("You have to log in first to access the admin page.");
