@@ -6,18 +6,6 @@ const cors = require("cors"); // Import cors middleware
 const app = express();
 const port = process.env.PORT || 8101;
 const router = express.Router();
-const session = require("express-session");
-const cp = require("cookie-parser");
-
-router.use(
-  session({
-    secret: "secret-key",
-    resave: false,
-    saveUninitialized: true,
-  })
-);
-
-router.use(cp());
 
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
@@ -132,19 +120,6 @@ router.get("/api/v1/search", (req, res) => {
   });
 });
 
-router.get("/api/v1/getUser/:username", (req, res) => {
-  const username = req.params.username;
-  connection.query(
-    `SELECT * FROM account WHERE username = ?`,
-    [username],
-    function (err, results) {
-      if (err) console.log(err);
-      console.log(results);
-      res.send(results);
-    }
-  );
-});
-
 router.delete("/api/v1/car", (req, res) => {
   const { product_id } = req.body;
   connection.query(
@@ -250,20 +225,6 @@ router.put("/api/v1/car", (req, res) => {
 });
 
 // Section B: Login
-router.get("/api/v1/checkLogin", (req, res) => {
-  // Check if the user is already logged in (cookie exists)
-  console.log("checklogin", req.session.username, req.session.password);
-  if (req.session.username && req.session.password) {
-    res.json({
-      pass: true,
-      username: req.session.username,
-      password: req.session.password,
-    });
-    return; // Exit the function
-  }
-  res.json({ pass: false, username: null, password: null });
-});
-
 router.post("/api/v1/login/", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -277,12 +238,6 @@ router.post("/api/v1/login/", (req, res) => {
       }
       console.log(results);
       if (results[0].count === 1) {
-        req.session.username = username;
-        req.session.password = password;
-        console.log(username, password);
-        //res.cookie["username"] = username;
-        //res.cookie["password"] = password;
-        console.log("login", req.session.username, req.session.password);
         res.json({
           pass: true,
           username: String(username),
@@ -353,19 +308,6 @@ router.get("/api/v1/discover", (req, res) => {
     console.log(results);
     res.send(results);
   });
-});
-
-router.get("/api/v1/getUser/:username", (req, res) => {
-  const username = req.params.username;
-  connection.query(
-    `SELECT * FROM account WHERE username = ?`,
-    [username],
-    function (err, results) {
-      if (err) console.log(err);
-      console.log(results);
-      res.send(results);
-    }
-  );
 });
 
 router.delete("/api/v1/user", (req, res) => {
