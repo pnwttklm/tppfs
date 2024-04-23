@@ -36,7 +36,7 @@ function Allofus() {
             <Link href="/pun"><Acard name="Pun" position="FrontEnd" pic = "/pun.jpg"/></Link>
             <Link href="/poon"><Acard name="Poon" position="BackEnd" pic = "/poon.jpg"/></Link>
             <Link href="/four"><Acard name="Four" position="FrontEnd" pic = "/4.jpg"/></Link>
-            <Link href="/shui"><Acard name="Shuiiy" position="FrontEnd" pic = "/Shuii.jpg"/></Link>
+            <Link href="/shui"><Acard name="Shuii" position="FrontEnd" pic = "/Shuii.jpg"/></Link>
           </Stack>
         </Center>
       </div>
