@@ -25,7 +25,7 @@ export default function WithSubnavigation() {
                 <h1 className="font-extrabold text-[#3E0070]">Our Team</h1>
               </Link>
               <Link className="bg-[#3E0070] rounded-full px-4 py-3 flex flex-row gap-2" href="/login">
-                <BsPersonVcard size={28} color="#FFFFFF" /> 
+                <BsPersonVcard size={28} color="#FFFFFF"/>
                 <h1 className="text-white font-extrabold">Staff Zone</h1>
               </Link>
               <Log_out />
