@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "on": "npm run dev -- -p 8001 --turbo",
+    "on": "npm run dev -- -p 8001",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 8001 ",
     "lint": "next lint"
   },
   "dependencies": {
