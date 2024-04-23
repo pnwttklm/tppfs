@@ -1,7 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import URL from "../../../data/url";
+import Url from "../../../data/url";
+import API from "../../../data/api";
+import OpenAI from "openai";
+import { Spinner, Center } from '@chakra-ui/react'
+import { TypeAnimation } from "react-type-animation";
 
 interface Car {
   image: string;
@@ -26,17 +30,23 @@ interface Car {
 function Page({ params }: { params: { slug: string } }) {
   const slug = params.slug;
   const [car, setCar] = useState<Car | null>(null);
+  const [message, setMessage] = useState<string>("");
+  const [didCallGen, setDidCallGen] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Fetch car data asynchronously
-        const response = await fetch(
-          `${URL()}/api/v1/car/${slug}`
-        ); // Replace with your API endpoint
+        const response = await fetch(`${Url()}/api/v1/car/${slug}`); // Replace with your API endpoint
         const data = await response.json();
         // console.log(data[0]);
         setCar(data[0]); // Update state with fetched car data
+        if (!didCallGen) {
+          genText(data[0]).then((res) => {
+            setMessage(res || "");
+            setDidCallGen(true);
+          });
+        }
       } catch (error) {
         console.error("Error fetching car data:", error);
       }
@@ -55,6 +65,29 @@ function Page({ params }: { params: { slug: string } }) {
     const formattedMonth = month < 10 ? "0" + month : month;
 
     return `${formattedDay}/${formattedMonth}/${year}`;
+  }
+
+  async function genText(aCar: Car) {
+    const openai = new OpenAI({
+      apiKey: API(),
+      dangerouslyAllowBrowser: true,
+    });
+    const completion = await openai.chat.completions.create({
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are driver of the car, please provide a persuasive user reviews for the car.",
+        },
+        {
+          role: "user",
+          content: `Write a testimonial for ${JSON.stringify(aCar)}.`,
+        },
+      ],
+      model: "gpt-3.5-turbo-0125",
+      response_format: { type: "text" },
+    });
+    return completion.choices[0].message.content;
   }
 
   return (
@@ -118,11 +151,35 @@ function Page({ params }: { params: { slug: string } }) {
               </div>
             </div>
             <a
-              className="bg-black rounded-full py-3 px-6 text-white"
+              className="bg-black rounded-full py-3 px-6 text-white "
               href="tel:024410909"
             >
               Contact Sales
             </a>
+            <h1 className="mt-12 mb-3 text-2xl">
+              <strong>Seller Testimonial</strong>
+            </h1>
+            <div className="bg-[#3E0070B8] p-6 rounded-2xl">
+              <h1 className="text-white font-bold text-6xl">"</h1>
+              {message!="" ? 
+              <p className=" text-white">
+              <TypeAnimation className=" text-white"
+              sequence={[
+                message,
+                1000,
+              ]}
+              wrapper="span"
+              speed={99}
+              repeat={Infinity}
+            />
+            </p> 
+              // {message}
+              :
+              <Center><Spinner size='xl' color="white"/></Center>
+              }
+              <h1 className="text-white font-bold text-6xl mt-3 text-right">"</h1>
+              <p className=" text-white text-right font-bold text-lg">Seller</p>
+            </div>
           </>
         )}
       </div>

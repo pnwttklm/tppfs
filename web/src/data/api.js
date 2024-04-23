@@ -1,0 +1,1 @@
+export default function API() {return('OPENAI_APIKEY_HERE');}
