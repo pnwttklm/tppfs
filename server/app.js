@@ -1,8 +1,8 @@
 const dotenv = require("dotenv");
-dotenv.config();
+dotenv.config(); //process.env = .env //process.env is declared by
 
 const express = require("express");
-const cors = require("cors"); // Import cors middleware
+const cors = require("cors"); // Import cors middleware 
 const app = express();
 const port = process.env.PORT || 8101;
 const router = express.Router();
@@ -14,6 +14,7 @@ app.use(cors()); // Use cors middleware
 app.use(router);
 
 const mysql = require("mysql2");
+
 var connection = mysql.createConnection({
   host: process.env.MYSQL_HOST,
   user: process.env.MYSQL_USERNAME,
@@ -33,8 +34,8 @@ router.get("/", (req, res) => {
   res.send("Hello World, the server is running!");
 });
 
-// Section A: Cars
 
+// Section A: Cars
 router.get("/api/v1/car", (req, res) => {
   connection.query(`SELECT * FROM car`, function (err, results) {
     if (err) console.log(err);
@@ -134,7 +135,8 @@ router.delete("/api/v1/car", (req, res) => {
 });
 function formatDate(dateString){
   const date = new Date(dateString);
-  const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+  const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString()
+    .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
   console.log(formattedDate); // 2016-10-22
   return formattedDate;
 }
@@ -142,21 +144,12 @@ router.post("/api/v1/car", (req, res) => {
   
   const car = req.body.car;
   connection.query(
-    `INSERT INTO car (image, brand, color, type, price, model, engine, fuel_type, distance, max_liter, gear, product_id, license, release_date, arrive_date, datetime, username) VALUES (?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO car (image, brand, color, type, price, model, engine, fuel_type, 
+      distance, max_liter, gear, product_id, license, release_date, arrive_date, datetime, username) 
+      VALUES (?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
-      car.image,
-      car.brand,
-      car.color,
-      car.type,
-      car.price,
-      car.model,
-      car.engine,
-      car.fuel_type,
-      car.distance,
-      car.max_liter,
-      car.gear,
-      car.product_id,
-      car.license,
+      car.image, car.brand, car.color, car.type, car.price, car.model, car.engine, car.fuel_type, car.distance,
+      car.max_liter, car.gear, car.product_id, car.license,
       formatDate(car.release_date),
       formatDate(car.arrive_date),
       car.datetime,
@@ -322,17 +315,13 @@ router.delete("/api/v1/user", (req, res) => {
     }
   );
 });
-function formatDate(dateString){
-  const date = new Date(dateString);
-  const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-  console.log(formattedDate); // 2016-10-22
-  return formattedDate;
-}
+
 router.post("/api/v1/user", (req, res) => {
-  
+
   const user = req.body.user;
   connection.query(
-    `INSERT INTO account (password, birth_date, lname, fname, email, username, citizen_number, phone_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO account (password, birth_date, lname, fname, email, username, citizen_number, phone_number) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       user.password,
       formatDate(user.birth_date),
