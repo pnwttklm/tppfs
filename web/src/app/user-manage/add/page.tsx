@@ -3,6 +3,7 @@ import { BsEyeSlashFill, BsEyeFill } from "react-icons/bs";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Checker from "../../../data/check";
+import { useRouter } from "next/navigation";
 import {
   Button,
   Input,
@@ -22,7 +23,18 @@ interface User {
   phone_number: string;
 }
 
+export default function Check(){
+  const router = useRouter();
+  if(Checker()){
+    return Page();
+  }else{
+    alert("You have to log in first to access the user management page.");
+    router.push("/login");
+  }
+}
+
 function Page() {
+  const router = useRouter();
   const [user, setUser] = useState<User>({
     citizen_number: "",
     username: "",
@@ -55,7 +67,7 @@ function Page() {
       .then((response: any) => {
         console.log(response);
         if (response) alert("Added Successfully");
-        window.location.href = "/user-manage";
+        router.push("/user-manage");
       })
       .catch((error: any) => {
         alert("Error Adding User");
@@ -254,5 +266,3 @@ function InputField({
     );
   }
 }
-
-export default Page;

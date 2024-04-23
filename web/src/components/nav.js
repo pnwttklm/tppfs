@@ -1,6 +1,7 @@
 "use client";
 
 import { Link } from "@chakra-ui/react";
+import Checker from "../data/check";
 
 import Image from "next/image";
 import {
@@ -34,7 +35,7 @@ export default function WithSubnavigation() {
 }
 
 function Log_out() {
-  if(localStorage.getItem('Status')){
+  if(Checker()){
     return(
       <Link className="bg-[#3E0070] rounded-full px-4 py-3 flex flex-row gap-2" href="\login" onClick={(e) => {
         // e.preventDefault(); // Prevent default navigation behavior

@@ -23,6 +23,7 @@ import {
 } from "react-icons/bs";
 import URL from "../../data/url";
 import Checker from "../../data/check";
+import { useRouter } from "next/navigation";
 
 interface User {
   pass: boolean,
@@ -31,8 +32,9 @@ interface User {
 }
 
 export default function Check(){
+  const router = useRouter();
   if(Checker()){
-    location.href = "/admin";
+    router.push("/admin");
   }else{
     return LoginPage();
   }
@@ -46,6 +48,7 @@ interface Time {
 
 
 function LoginPage() {
+  const router = useRouter();
   const [show, setShow] = React.useState(false);
   const [ID, setID] = useState("");
   const [password, setPassword] = useState("");
@@ -107,7 +110,7 @@ function LoginPage() {
           localStorage.setItem("Status", "Admin");
           localStorage.setItem("Username", response.data.username);
           setTimeout(() => {
-            window.location.href = "/admin";
+            router.push("/admin");
           }, 1000);
         }else{
           alert("Wrong Login Credentials");

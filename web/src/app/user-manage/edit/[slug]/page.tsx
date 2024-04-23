@@ -11,6 +11,7 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import URL from "../../../../data/url";
+import { useRouter } from "next/navigation";
 interface User {
   citizen_number: string;
   username: string;
@@ -23,15 +24,17 @@ interface User {
 }
 
 export default function Check({ params }: { params: { slug: string } }) {
+  const router = useRouter();
   if(Checker()){
     return Page(params.slug);
   }else{
     alert("You have to log in first to access the product management page.");
-    location.href = "/login";
+    router.push("/login");
   }
 }
 
 function Page(slug : string) {
+  const router = useRouter();
   const [user, setUser] = useState<User>({
     citizen_number: "",
     username: "",
@@ -82,7 +85,7 @@ function Page(slug : string) {
       .then((response: any) => {
         console.log(response);
         if (response) alert("Saved Successfully");
-        window.location.href = "/user-manage";
+        router.push("/user-manage");
       })
       .catch((error: any) => {
         console.log(error);

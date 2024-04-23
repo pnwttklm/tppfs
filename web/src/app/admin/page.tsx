@@ -1,41 +1,55 @@
 "use client";
-import React, {useState, useEffect} from "react";
-import { Center, Checkbox, Button } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
+import {
+  Center,
+  Checkbox,
+  Button,
+  useToast,
+} from "@chakra-ui/react";
 import { BsPersonFillGear, BsDatabaseFillGear } from "react-icons/bs";
 import URL from "../../data/url";
 import Checker from "../../data/check";
+import { useRouter } from 'next/navigation'
 
 export default function Check() {
+  const router = useRouter();
+  const toast = useToast()
   if (Checker()) {
     return Page();
   } else {
-    alert("You have to log in first to access the admin page.");
-    location.href = "/login";
+    const ttoast = () => toast({
+      title: 'Unauthorized Access',
+      description: "You have to log in first to access the admin page.",
+      status: 'error',
+      duration: 9000,
+      isClosable: true,
+    })
+    ttoast();
+    // alert("You have to log in first to access the admin page.");
+    setTimeout(() => {
+      router.push('/login');
+    }, 9000);
   }
 }
-function UserManage() {
-  return (location.href = "/user-manage");
-}
-function ProdManage() {
-  return (location.href = "/product-manage");
-}
+
 function Page() {
+  const router = useRouter();
   const [name, setName] = useState("");
 
-    fetch(`${URL()}/api/v1/user/${localStorage.getItem("Username")}`)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return res.json();
-      })
-      .then((data) => {
-        console.log(data[0].fname + ' ' + data[0].lname);
-        setName(data[0].fname + ' ' + data[0].lname);
-      })
-      .catch((error) => {
-        console.error('Error fetching user data:', error);
-      });
+  fetch(`${URL()}/api/v1/user/${localStorage.getItem("Username")}`)
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return res.json();
+    })
+    .then((data) => {
+      console.log(data[0].fname + " " + data[0].lname);
+      setName(data[0].fname + " " + data[0].lname);
+    })
+    .catch((error) => {
+      console.error("Error fetching user data:", error);
+    });
   return (
     <div>
       {/*Photo and  Text*/}
@@ -64,7 +78,7 @@ function Page() {
               <Center>Manager</Center>
             </div>
             <Button
-              onClick={() => UserManage()}
+              onClick={() => router.push("/user-manage")}
               className="text-xl rounded-full  border border-[#3E0070] text-[#FFFFFF] 
           bg-[#3E0070] hover:bg-[#FFFFFF] hover:text-[#3E0070]"
               mt={"3"}
@@ -93,7 +107,7 @@ function Page() {
               <Center>Manager</Center>
             </div>
             <Button
-              onClick={() => ProdManage()}
+              onClick={() => router.push("/product-manage")}
               className="text-xl rounded-full border border-[#3E0070] text-[#FFFFFF] 
           bg-[#3E0070] hover:bg-[#FFFFFF] hover:text-[#3E0070]"
               mt={"3"}

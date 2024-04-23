@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Button, Input } from "@chakra-ui/react";
 import URL from "../../../../data/url";
 import Checker from "../../../../data/check";
+import { useRouter } from "next/navigation";
 interface Car {
   image: string;
   brand: string;
@@ -26,15 +27,17 @@ interface Car {
 }
 
 export default function Check({ params }: { params: { slug: string } }) {
+  const router = useRouter();
   if(Checker()){
     return Page(params.slug);
   }else{
     alert("You have to log in first to access the product management page.");
-    location.href = "/login";
+    router.push("/login");
   }
 }
 
 function Page(slug : string) {
+  const router = useRouter();
   const [car, setCar] = useState<Car>({
     image: "",
     brand: "",
@@ -94,7 +97,7 @@ function Page(slug : string) {
       .then((response: any) => {
         console.log(response);
         if (response) alert("Saved Successfully");
-        window.location.href = "/product-manage";
+        router.push("/product-manage");
       })
       .catch((error: any) => {
         console.log(error);
@@ -265,7 +268,7 @@ function Page(slug : string) {
                   EditCar(car)
                 }else{
                   alert("You have to log in first to delete the product.");
-                  location.href = "/login";
+                  router.push("/login");
                 }
               }}
               background={"#3E0070"}
