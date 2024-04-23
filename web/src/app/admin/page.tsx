@@ -1,22 +1,27 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  Center,
-  Checkbox,
-  Button,
-} from "@chakra-ui/react";
+import { Center, Checkbox, Button } from "@chakra-ui/react";
 import { BsPersonFillGear, BsDatabaseFillGear } from "react-icons/bs";
 import URL from "../../data/url";
 import Checker from "../../data/check";
 import { useRouter } from "next/navigation";
 
 export default function Check() {
-  const router = useRouter();
+
   if (Checker()) {
     return Page();
   } else {
-    router.push("/login");
+      window.location.href = "/login";
   }
+}
+function handleUserM() {
+
+  window.location.href =  "/user-manage";
+  return null;
+}
+function handleProdM() {
+  window.location.href = "/product-manage";
+  return null;
 }
 
 function Page() {
@@ -38,9 +43,9 @@ function Page() {
         console.error("Error fetching user data:", error);
       });
   }
+
   return (
     <div>
-      {/*Photo and  Text*/}
       <Center className="grid grid-cols-3 gap-32">
         <div className="flex flex-row">
           <div className="font-bold text-7xl text-center mt-20">
@@ -66,7 +71,7 @@ function Page() {
               <Center>Manager</Center>
             </div>
             <Button
-              onClick={() => router.push("/user-manage")}
+              onClick={handleUserM}
               className="text-xl rounded-full  border border-[#3E0070] text-[#FFFFFF] 
           bg-[#3E0070] hover:bg-[#FFFFFF] hover:text-[#3E0070]"
               mt={"3"}
@@ -95,7 +100,7 @@ function Page() {
               <Center>Manager</Center>
             </div>
             <Button
-              onClick={() => router.push("/product-manage")}
+              onClick={handleProdM}
               className="text-xl rounded-full border border-[#3E0070] text-[#FFFFFF] 
           bg-[#3E0070] hover:bg-[#FFFFFF] hover:text-[#3E0070]"
               mt={"3"}

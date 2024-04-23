@@ -31,7 +31,7 @@ export default function Check({ params }: { params: { slug: string } }) {
   if(Checker()){
     return Page(params.slug);
   }else{
-    router.push("/login");
+    window.location.href = "/login";
   }
 }
 
@@ -96,7 +96,7 @@ const [shown, setShown] = useState(false);
       .then((response: any) => {
         console.log(response);
         if (response){
-        router.push("/product-manage");
+          window.location.href = "/product-manage";
         }
       })
       .catch((error: any) => {
@@ -267,7 +267,7 @@ const [shown, setShown] = useState(false);
                 if(Checker()){
                   EditCar(car)
                 }else{
-                  router.push("/login");
+                  useEffect(() => {router.push("/login")} , []);
                 }
               }}
               background={"#3E0070"}

@@ -28,7 +28,7 @@ export default function Check(){
   if(Checker()){
     return Page();
   }else{
-    router.push("/login");
+    window.location.href = "/login";
   }
 }
 
@@ -66,7 +66,7 @@ const [shown, setShown] = useState(false);
       .then((response: any) => {
         console.log(response);
         if (response){
-        router.push("/user-manage");
+          window.location.href = "/user-manage"
         }
       })
       .catch((error: any) => {

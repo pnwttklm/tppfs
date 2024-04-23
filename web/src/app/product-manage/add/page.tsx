@@ -31,7 +31,7 @@ export default function Check() {
   if (Checker()) {
     return Page();
   } else {
-    router.push("/login");
+    window.location.href = "/login";
   }
 }
 
@@ -80,7 +80,7 @@ function Page() {
       .then((response: any) => {
         console.log(response);
         if (response) {
-          router.push("/product-manage");
+          window.location.href = "/product-manage";
         }
       })
       .catch((error: any) => {
@@ -251,7 +251,7 @@ function Page() {
                 if (Checker()) {
                   AddCar(car);
                 } else {
-                  router.push("/login");
+                  window.location.href = "/login";
                 }
               }}
               background={"#3E0070"}

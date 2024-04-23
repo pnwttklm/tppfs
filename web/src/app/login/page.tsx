@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Center,
   Input,
@@ -30,7 +30,7 @@ interface User {
 export default function Check() {
   const router = useRouter();
   if (Checker()) {
-    router.push("/admin");
+    window.location.href = "/admin";
   } else {
     return LoginPage();
   }
@@ -104,9 +104,9 @@ function LoginPage() {
             Addlogin(new Date(), response.data.username);
             localStorage.setItem("Status", "Admin");
             localStorage.setItem("Username", response.data.username);
-            setTimeout(() => {
-              router.push("/admin");
-            }, 1000);
+              setTimeout(() => {
+                window.location.href = "/admin";
+              }, 1000);
           } else {
             setShown(true);
           }
@@ -121,7 +121,7 @@ function LoginPage() {
     <div className="bg-[#F5F5F5] h-screen">
       <Center className="h-full">
         <Center className="bg-[#FFFFFF] mx-6 rounded-3xl flex flex-col p-12 mt-8 w-fit shadow-2xl">
-        {shown && <p className="text-[#FE0000]">Wrong Login Credentials</p>}
+          {shown && <p className="text-[#FE0000]">Wrong Login Credentials</p>}
           <img src="/logo.svg" width={100} height={100}></img>
           <br></br>
           <h1 className="text-3xl font-extrabold mb-6">Login</h1>

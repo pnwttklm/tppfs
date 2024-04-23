@@ -43,7 +43,7 @@ export default function Check(){
   if(Checker()){
     return Page();
   }else{
-    router.push("/login");
+    window.location.href = "/login";
   }
 }
 
@@ -156,9 +156,9 @@ function Page() {
       </div>
       <div className="flex flex-row justify-end mr-16" onClick={() => {
                   if(Checker()){
-                    router.push("/product-manage/add");
+                    window.location.href = "/product-manage/add";
                   }else{
-                    router.push("/login");
+                    window.location.href = "/login";
                   }
                 }}>
           <IoAddCircle size="40" />
@@ -235,9 +235,9 @@ function Page() {
             <Card className="rounded-2xl" size="md" key={index}>
                 <CardHeader className="relative h-[256px]" onClick={() => {
                   if(Checker()){
-                    router.push(`/product-manage/edit/${item.product_id}`);
+                    window.location.href = `/product-manage/edit/${item.product_id}`;
                   }else{
-                    router.push("/login");
+                    window.location.href = "/login";
                   }
                 }}>
                   <Image
@@ -251,9 +251,9 @@ function Page() {
                 </CardHeader>
                 <CardBody className="relative" onClick={() => {
                   if(Checker()){
-                    router.push(`/product-manage/edit/${item.product_id}`);
+                    window.location.href = `/product-manage/edit/${item.product_id}`;
                   }else{
-                    router.push("/login");
+                    window.location.href = "/login";
                   }
                 }}>
                   <h3 className=" text-[#808080] text-sm">
@@ -280,16 +280,16 @@ function Page() {
                   if(Checker()){
                     DeleteCar(String(item.product_id))
                   }else{
-                    router.push("/login");
+                    window.location.href = "/login";
                   }
                 }}>
                   <BsTrash3></BsTrash3>
                 </Button>
                 <Button onClick={() => {
                   if(Checker()){
-                    router.push(`/product-manage/edit/${item.product_id}`);
+                    window.location.href = `/product-manage/edit/${item.product_id}`;
                   }else{
-                    router.push("/login");
+                    window.location.href = "/login";
                   }
                 }}>Edit</Button>
               </CardFooter>

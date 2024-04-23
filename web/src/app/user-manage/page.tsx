@@ -33,7 +33,7 @@ export default function Check(){
   if(Checker()){
     return Home();
   }else{
-    router.push("/login");
+    window.location.href = "/login";
   }
 }
 
@@ -193,7 +193,7 @@ function Home() {
               </div>
               <div className="content-center">
                 <div className="content-center">
-                  <Button gap={2} mr={3} onClick={() => router.push(`/user-manage/edit/${prop.username}`)}>
+                  <Button gap={2} mr={3} onClick={() => window.location.href = `/user-manage/edit/${prop.username}`}>
                     <BsPen />
                     Edit
                   </Button>
