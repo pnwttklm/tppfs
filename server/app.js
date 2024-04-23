@@ -250,20 +250,6 @@ router.put("/api/v1/car", (req, res) => {
 });
 
 // Section B: Login
-router.get("/api/v1/checkLogin", (req, res) => {
-  // Check if the user is already logged in (cookie exists)
-  console.log("checklogin", req.session.username, req.session.password);
-  if (req.session.username && req.session.password) {
-    res.json({
-      pass: true,
-      username: req.session.username,
-      password: req.session.password,
-    });
-    return; // Exit the function
-  }
-  res.json({ pass: false, username: null, password: null });
-});
-
 router.post("/api/v1/login/", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -316,7 +302,7 @@ router.get("/api/v1/user/:username", (req, res) => {
   );
 });
 
-
+//search for user
 router.get("/api/v1/discover", (req, res) => {
   const { name, startAge, endAge, email, tel } = req.query;
   let sql = "SELECT * FROM account WHERE 1=1";
