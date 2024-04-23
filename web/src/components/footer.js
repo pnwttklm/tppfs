@@ -1,6 +1,5 @@
 "use client";
-import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 
 export default function footer() {
   const year = new Date().getFullYear();
@@ -37,18 +36,3 @@ export default function footer() {
     </footer>
   );
 }
-
-const link = [
-  {
-    name: "Privacy Policy",
-    link: "/privacy-policy",
-  },
-  {
-    name: "Terms of Use",
-    link: "/terms",
-  },
-  {
-    name: "Acknowledgement",
-    link: "/acknowledgement",
-  },
-];
