@@ -17,25 +17,16 @@ export default function Check() {
   if (Checker()) {
     return Page();
   } else {
-    const ttoast = () => toast({
-      title: 'Unauthorized Access',
-      description: "You have to log in first to access the admin page.",
-      status: 'error',
-      duration: 9000,
-      isClosable: true,
-    })
-    ttoast();
     // alert("You have to log in first to access the admin page.");
-    setTimeout(() => {
+
       router.push('/login');
-    }, 9000);
   }
 }
 
 function Page() {
   const router = useRouter();
   const [name, setName] = useState("");
-
+  if (typeof window !== "undefined") {
   fetch(`${URL()}/api/v1/user/${localStorage.getItem("Username")}`)
     .then((res) => {
       if (!res.ok) {
@@ -50,6 +41,7 @@ function Page() {
     .catch((error) => {
       console.error("Error fetching user data:", error);
     });
+  }
   return (
     <div>
       {/*Photo and  Text*/}

@@ -87,6 +87,7 @@ function LoginPage() {
   }
 
   function DefaultPage() {
+    
     const axios = require("axios");
     let data = JSON.stringify({
       username: String(ID),
@@ -102,6 +103,7 @@ function LoginPage() {
         },
       data: data,
     };
+    if (typeof window !== "undefined") {
     axios
       .request(config)
       .then((response:any) => {
@@ -119,6 +121,7 @@ function LoginPage() {
       .catch((error:any) => {
         alert(error)
       });
+    }
   }
 
   return (

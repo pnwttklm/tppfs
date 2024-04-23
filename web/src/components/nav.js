@@ -7,7 +7,6 @@ import Image from "next/image";
 import {
   BsPersonVcard,
 }from "react-icons/bs";
-import Checker from "../data/check";
 
 export default function WithSubnavigation() {
   return (
@@ -36,7 +35,7 @@ export default function WithSubnavigation() {
 }
 
 function Log_out() {
-  if(Checker()){
+  if(Checker() && typeof window !== "undefined"){
     return(
       <Link className="bg-[#3E0070] rounded-full px-4 py-3 flex flex-row gap-2" href="\login" onClick={(e) => {
         localStorage.removeItem('Status');
