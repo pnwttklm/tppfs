@@ -31,7 +31,6 @@ export default function Check({ params }: { params: { slug: string } }) {
   if(Checker()){
     return Page(params.slug);
   }else{
-    alert("You have to log in first to access the product management page.");
     router.push("/login");
   }
 }
@@ -75,7 +74,7 @@ function Page(slug : string) {
 
     fetchData(); // Call the fetchData function when the component mounts
   }, []);
-
+const [shown, setShown] = useState(false);
   function EditCar(car: Car) {
     const axios = require("axios");
     let data = JSON.stringify({
@@ -96,12 +95,13 @@ function Page(slug : string) {
       .request(config)
       .then((response: any) => {
         console.log(response);
-        if (response) alert("Saved Successfully");
+        if (response){
         router.push("/product-manage");
+        }
       })
       .catch((error: any) => {
         console.log(error);
-        alert("Error Saving");
+        setShown(true);
       });
   }
 
@@ -114,7 +114,7 @@ function Page(slug : string) {
             &larr; Back
           </a>
         </div>
-
+        {shown && <p className="text-[#FE0000]">Data provided not meet the requirements</p>}
         {/* Photo and Upload Button */}
         <div className="flex items-center mb-4">
           <div className="w-120 h-80 bg-gray-full rounded-lg overflow-hidden">
@@ -252,7 +252,7 @@ function Page(slug : string) {
         {/* Action Buttons and Trash Icon */}
         <div className="flex justify-between items-center">
           <div className="text-[#3E0070]  cursor-pointer">
-            {/* <FaTrashAlt size="50" /> */}
+          {shown && <p className="text-[#FE0000]">Data provided not meet the requirements</p>}
           </div>
           <div>
             <a
@@ -267,7 +267,6 @@ function Page(slug : string) {
                 if(Checker()){
                   EditCar(car)
                 }else{
-                  alert("You have to log in first to delete the product.");
                   router.push("/login");
                 }
               }}

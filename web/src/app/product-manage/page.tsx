@@ -43,7 +43,6 @@ export default function Check(){
   if(Checker()){
     return Page();
   }else{
-    alert("You have to log in first to access the product management page.");
     router.push("/login");
   }
 }
@@ -159,7 +158,6 @@ function Page() {
                   if(Checker()){
                     router.push("/product-manage/add");
                   }else{
-                    alert("You have to log in first to add the product.");
                     router.push("/login");
                   }
                 }}>
@@ -239,7 +237,6 @@ function Page() {
                   if(Checker()){
                     router.push(`/product-manage/edit/${item.product_id}`);
                   }else{
-                    alert("You have to log in first to edit the product.");
                     router.push("/login");
                   }
                 }}>
@@ -256,7 +253,6 @@ function Page() {
                   if(Checker()){
                     router.push(`/product-manage/edit/${item.product_id}`);
                   }else{
-                    alert("You have to log in first to edit the product.");
                     router.push("/login");
                   }
                 }}>
@@ -284,7 +280,6 @@ function Page() {
                   if(Checker()){
                     DeleteCar(String(item.product_id))
                   }else{
-                    alert("You have to log in first to delete the product.");
                     router.push("/login");
                   }
                 }}>
@@ -294,7 +289,6 @@ function Page() {
                   if(Checker()){
                     router.push(`/product-manage/edit/${item.product_id}`);
                   }else{
-                    alert("You have to log in first to edit the product.");
                     router.push("/login");
                   }
                 }}>Edit</Button>

@@ -39,7 +39,6 @@ function Log_out() {
     return(
       <Link className="bg-[#3E0070] rounded-full px-4 py-3 flex flex-row gap-2" href="\login" onClick={(e) => {
         localStorage.removeItem('Status');
-        alert("Logged out");
       }}>
         <h1 className="text-white font-extrabold">Log out</h1>
       </Link>

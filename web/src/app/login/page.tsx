@@ -1,11 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import {
-  Alert,
-  AlertIcon,
   Center,
-  Checkbox,
-  Link,
   Input,
   InputGroup,
   InputLeftElement,
@@ -26,26 +22,24 @@ import Checker from "../../data/check";
 import { useRouter } from "next/navigation";
 
 interface User {
-  pass: boolean,
-  username: string,
-  password: string,
+  pass: boolean;
+  username: string;
+  password: string;
 }
 
-export default function Check(){
+export default function Check() {
   const router = useRouter();
-  if(Checker()){
+  if (Checker()) {
     router.push("/admin");
-  }else{
+  } else {
     return LoginPage();
   }
 }
 
 interface Time {
-  datetime: Date | null,
-  username: string,
+  datetime: Date | null;
+  username: string;
 }
-
-
 
 function LoginPage() {
   const router = useRouter();
@@ -63,7 +57,6 @@ function LoginPage() {
       time: time,
       username: username,
     });
-    // alert(data);
     let config = {
       method: "post",
       maxBodyLength: Infinity,
@@ -73,7 +66,7 @@ function LoginPage() {
       },
       data: data,
     };
-  
+
     axios
       .request(config)
       .then((response: any) => {
@@ -82,12 +75,12 @@ function LoginPage() {
       })
       .catch((error: any) => {
         console.log("Error Adding Time login" + error);
-        alert("Error Adding Time login" + error);
       });
   }
 
+  const [shown, setShown] = useState(false);
+
   function DefaultPage() {
-    
     const axios = require("axios");
     let data = JSON.stringify({
       username: String(ID),
@@ -100,27 +93,27 @@ function LoginPage() {
       url: URL() + "/api/v1/login",
       headers: {
         "Content-Type": "application/json",
-        },
+      },
       data: data,
     };
     if (typeof window !== "undefined") {
-    axios
-      .request(config)
-      .then((response:any) => {
-        if(response.data.pass){
-          Addlogin(new Date(), response.data.username);
-          localStorage.setItem("Status", "Admin");
-          localStorage.setItem("Username", response.data.username);
-          setTimeout(() => {
-            router.push("/admin");
-          }, 1000);
-        }else{
-          alert("Wrong Login Credentials");
-        }
-      })
-      .catch((error:any) => {
-        alert(error)
-      });
+      axios
+        .request(config)
+        .then((response: any) => {
+          if (response.data.pass) {
+            Addlogin(new Date(), response.data.username);
+            localStorage.setItem("Status", "Admin");
+            localStorage.setItem("Username", response.data.username);
+            setTimeout(() => {
+              router.push("/admin");
+            }, 1000);
+          } else {
+            setShown(true);
+          }
+        })
+        .catch((error: any) => {
+          console.log(error);
+        });
     }
   }
 
@@ -128,6 +121,7 @@ function LoginPage() {
     <div className="bg-[#F5F5F5] h-screen">
       <Center className="h-full">
         <Center className="bg-[#FFFFFF] mx-6 rounded-3xl flex flex-col p-12 mt-8 w-fit shadow-2xl">
+        {shown && <p className="text-[#FE0000]">Wrong Login Credentials</p>}
           <img src="/logo.svg" width={100} height={100}></img>
           <br></br>
           <h1 className="text-3xl font-extrabold mb-6">Login</h1>

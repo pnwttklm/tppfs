@@ -33,7 +33,6 @@ export default function Check(){
   if(Checker()){
     return Home();
   }else{
-    alert("You have to log in first to access the user management page.");
     router.push("/login");
   }
 }

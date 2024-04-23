@@ -28,7 +28,6 @@ export default function Check(){
   if(Checker()){
     return Page();
   }else{
-    alert("You have to log in first to access the user management page.");
     router.push("/login");
   }
 }
@@ -45,7 +44,7 @@ function Page() {
     password: "",
     phone_number: "",
   });
-
+const [shown, setShown] = useState(false);
   function AddUser(user: User) {
     const axios = require("axios");
     let data = JSON.stringify({
@@ -66,11 +65,12 @@ function Page() {
       .request(config)
       .then((response: any) => {
         console.log(response);
-        if (response) alert("Added Successfully");
+        if (response){
         router.push("/user-manage");
+        }
       })
       .catch((error: any) => {
-        alert("Error Adding User");
+        setShown(true);
       });
   }
 
@@ -83,6 +83,7 @@ function Page() {
             &larr; Back
           </a>
         </div>
+        {shown && <p className="text-[#FE0000]">Data provided not meet the requirements</p>}
 
         {/* Input Fields */}
         <div className="flex mb-4 border-b pb-4">
@@ -151,7 +152,7 @@ function Page() {
         {/* Action Buttons and Trash Icon */}
         <div className="flex justify-between items-center">
           <div className="text-[#3E0070]  cursor-pointer">
-            {/* <FaTrashAlt size="50" /> */}
+          {shown && <p className="text-[#FE0000]">Data provided not meet the requirements</p>}
           </div>
           <div>
             <a

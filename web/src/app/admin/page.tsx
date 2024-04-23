@@ -4,22 +4,18 @@ import {
   Center,
   Checkbox,
   Button,
-  useToast,
 } from "@chakra-ui/react";
 import { BsPersonFillGear, BsDatabaseFillGear } from "react-icons/bs";
 import URL from "../../data/url";
 import Checker from "../../data/check";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 export default function Check() {
   const router = useRouter();
-  const toast = useToast()
   if (Checker()) {
     return Page();
   } else {
-    // alert("You have to log in first to access the admin page.");
-
-      router.push('/login');
+    router.push("/login");
   }
 }
 
@@ -27,20 +23,20 @@ function Page() {
   const router = useRouter();
   const [name, setName] = useState("");
   if (typeof window !== "undefined") {
-  fetch(`${URL()}/api/v1/user/${localStorage.getItem("Username")}`)
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return res.json();
-    })
-    .then((data) => {
-      console.log(data[0].fname + " " + data[0].lname);
-      setName(data[0].fname + " " + data[0].lname);
-    })
-    .catch((error) => {
-      console.error("Error fetching user data:", error);
-    });
+    fetch(`${URL()}/api/v1/user/${localStorage.getItem("Username")}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data[0].fname + " " + data[0].lname);
+        setName(data[0].fname + " " + data[0].lname);
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+      });
   }
   return (
     <div>
