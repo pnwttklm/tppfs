@@ -271,7 +271,7 @@ router.get("/api/v1/user/:username", (req, res) => {
   );
 });
 
-
+//search for user
 router.get("/api/v1/discover", (req, res) => {
   const { name, startAge, endAge, email, tel } = req.query;
   let sql = "SELECT * FROM account WHERE 1=1";
