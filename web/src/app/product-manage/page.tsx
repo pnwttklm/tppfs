@@ -17,6 +17,7 @@ import { IoAddCircle } from "react-icons/io5";
 import { BsTrash3 } from "react-icons/bs";
 import URL from "../../data/url";
 import Checker from "../../data/check";
+import { useRouter } from 'next/navigation'
 interface Car {
   image: string;
   brand: string;
@@ -38,16 +39,17 @@ interface Car {
 }
 
 export default function Check(){
+  const router = useRouter();
   if(Checker()){
     return Page();
   }else{
-    alert("You have to log in first to access the product management page.");
-    location.href = "/login";
+    window.location.href = "/login";
   }
 }
 
 
 function Page() {
+  const router = useRouter();
   const initialCars: Car[] = [];
   const [cars, setCars] = useState<Car[]>(initialCars);
   const [value, setValue] = React.useState("");
@@ -154,10 +156,9 @@ function Page() {
       </div>
       <div className="flex flex-row justify-end mr-16" onClick={() => {
                   if(Checker()){
-                    location.href = "/product-manage/add";
+                    window.location.href = "/product-manage/add";
                   }else{
-                    alert("You have to log in first to add the product.");
-                    location.href = "/login";
+                    window.location.href = "/login";
                   }
                 }}>
           <IoAddCircle size="40" />
@@ -234,10 +235,9 @@ function Page() {
             <Card className="rounded-2xl" size="md" key={index}>
                 <CardHeader className="relative h-[256px]" onClick={() => {
                   if(Checker()){
-                    location.href = `/product-manage/edit/${item.product_id}`;
+                    window.location.href = `/product-manage/edit/${item.product_id}`;
                   }else{
-                    alert("You have to log in first to edit the product.");
-                    location.href = "/login";
+                    window.location.href = "/login";
                   }
                 }}>
                   <Image
@@ -251,10 +251,9 @@ function Page() {
                 </CardHeader>
                 <CardBody className="relative" onClick={() => {
                   if(Checker()){
-                    location.href = `/product-manage/edit/${item.product_id}`;
+                    window.location.href = `/product-manage/edit/${item.product_id}`;
                   }else{
-                    alert("You have to log in first to edit the product.");
-                    location.href = "/login";
+                    window.location.href = "/login";
                   }
                 }}>
                   <h3 className=" text-[#808080] text-sm">
@@ -281,18 +280,16 @@ function Page() {
                   if(Checker()){
                     DeleteCar(String(item.product_id))
                   }else{
-                    alert("You have to log in first to delete the product.");
-                    location.href = "/login";
+                    window.location.href = "/login";
                   }
                 }}>
                   <BsTrash3></BsTrash3>
                 </Button>
                 <Button onClick={() => {
                   if(Checker()){
-                    location.href = `/product-manage/edit/${item.product_id}`;
+                    window.location.href = `/product-manage/edit/${item.product_id}`;
                   }else{
-                    alert("You have to log in first to edit the product.");
-                    location.href = "/login";
+                    window.location.href = "/login";
                   }
                 }}>Edit</Button>
               </CardFooter>

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Button, Input } from "@chakra-ui/react";
 import URL from "../../../data/url";
 import Checker from "../../../data/check";
+import { useRouter } from "next/navigation";
 interface Car {
   image: string;
   brand: string;
@@ -26,15 +27,16 @@ interface Car {
 }
 
 export default function Check() {
-  if(Checker()){
+  const router = useRouter();
+  if (Checker()) {
     return Page();
-  }else{
-    alert("You have to log in first to access the product management page.");
-    location.href = "/login";
+  } else {
+    window.location.href = "/login";
   }
 }
 
 function Page() {
+  const router = useRouter();
   const [car, setCar] = useState<Car>({
     image: "",
     brand: "",
@@ -54,6 +56,8 @@ function Page() {
     datetime: null,
     username: "",
   });
+
+  const [shown, setShown] = useState(false);
 
   function AddCar(car: Car) {
     const axios = require("axios");
@@ -75,11 +79,12 @@ function Page() {
       .request(config)
       .then((response: any) => {
         console.log(response);
-        if (response) alert("Added Successfully");
-        window.location.href = "/product-manage";
+        if (response) {
+          window.location.href = "/product-manage";
+        }
       })
       .catch((error: any) => {
-        alert("Error Adding Car");
+        setShown(true);
       });
   }
 
@@ -92,6 +97,7 @@ function Page() {
             &larr; Back
           </a>
         </div>
+        {shown && <p className="text-[#FE0000]">Data provided not meet the requirements</p>}
 
         {/* Photo and Upload Button */}
         <div className="flex items-center mb-4">
@@ -230,7 +236,7 @@ function Page() {
         {/* Action Buttons and Trash Icon */}
         <div className="flex justify-between items-center">
           <div className="text-[#3E0070]  cursor-pointer">
-            {/* <FaTrashAlt size="50" /> */}
+          {shown && <p className="text-[#FE0000]">Data provided not meet the requirements</p>}
           </div>
           <div>
             <a
@@ -242,11 +248,10 @@ function Page() {
             <Button
               className="bg-[#3E0070]  text-white rounded px-4 py-2"
               onClick={() => {
-                if(Checker()){
-                  AddCar(car)
-                }else{
-                  alert("You have to log in first to add the product.");
-                  location.href = "/login";
+                if (Checker()) {
+                  AddCar(car);
+                } else {
+                  window.location.href = "/login";
                 }
               }}
               background={"#3E0070"}
@@ -313,4 +318,3 @@ function InputField({
     </div>
   );
 }
-

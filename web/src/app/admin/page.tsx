@@ -1,44 +1,51 @@
 "use client";
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Center, Checkbox, Button } from "@chakra-ui/react";
 import { BsPersonFillGear, BsDatabaseFillGear } from "react-icons/bs";
 import URL from "../../data/url";
 import Checker from "../../data/check";
+import { useRouter } from "next/navigation";
 
 export default function Check() {
+
   if (Checker()) {
     return Page();
   } else {
-    alert("You have to log in first to access the admin page.");
-    location.href = "/login";
+      window.location.href = "/login";
   }
 }
-function UserManage() {
-  return (location.href = "/user-manage");
-}
-function ProdManage() {
-  return (location.href = "/product-manage");
-}
-function Page() {
-  const [name, setName] = useState("");
+function handleUserM() {
 
+  window.location.href =  "/user-manage";
+  return null;
+}
+function handleProdM() {
+  window.location.href = "/product-manage";
+  return null;
+}
+
+function Page() {
+  const router = useRouter();
+  const [name, setName] = useState("");
+  if (typeof window !== "undefined") {
     fetch(`${URL()}/api/v1/user/${localStorage.getItem("Username")}`)
       .then((res) => {
         if (!res.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         return res.json();
       })
       .then((data) => {
-        console.log(data[0].fname + ' ' + data[0].lname);
-        setName(data[0].fname + ' ' + data[0].lname);
+        console.log(data[0].fname + " " + data[0].lname);
+        setName(data[0].fname + " " + data[0].lname);
       })
       .catch((error) => {
-        console.error('Error fetching user data:', error);
+        console.error("Error fetching user data:", error);
       });
+  }
+
   return (
     <div>
-      {/*Photo and  Text*/}
       <Center className="grid grid-cols-3 gap-32">
         <div className="flex flex-row">
           <div className="font-bold text-7xl text-center mt-20">
@@ -64,7 +71,7 @@ function Page() {
               <Center>Manager</Center>
             </div>
             <Button
-              onClick={() => UserManage()}
+              onClick={handleUserM}
               className="text-xl rounded-full  border border-[#3E0070] text-[#FFFFFF] 
           bg-[#3E0070] hover:bg-[#FFFFFF] hover:text-[#3E0070]"
               mt={"3"}
@@ -93,7 +100,7 @@ function Page() {
               <Center>Manager</Center>
             </div>
             <Button
-              onClick={() => ProdManage()}
+              onClick={handleProdM}
               className="text-xl rounded-full border border-[#3E0070] text-[#FFFFFF] 
           bg-[#3E0070] hover:bg-[#FFFFFF] hover:text-[#3E0070]"
               mt={"3"}

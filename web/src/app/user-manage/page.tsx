@@ -14,6 +14,7 @@ import { IoSearchCircleSharp, IoAddCircle } from "react-icons/io5";
 import React, { useState, useEffect } from "react";
 import { BsPen, BsChevronUp, BsChevronDown, BsTrash3 } from "react-icons/bs";
 import URL from "../../data/url";
+import { useRouter } from "next/navigation";
 interface User {
   citizen_number: string;
   username: string;
@@ -28,16 +29,17 @@ interface User {
 import Checker from "../../data/check";
 
 export default function Check(){
+  const router = useRouter();
   if(Checker()){
     return Home();
   }else{
-    alert("You have to log in first to access the user management page.");
-    location.href = "/login";
+    window.location.href = "/login";
   }
 }
 
 
 function Home() {
+  const router = useRouter();
   const initialUsers: User[] = [];
   const [users, setUsers] = useState<User[]>(initialUsers);
 
@@ -191,7 +193,7 @@ function Home() {
               </div>
               <div className="content-center">
                 <div className="content-center">
-                  <Button gap={2} mr={3} onClick={() => location.href = `/user-manage/edit/${prop.username}`}>
+                  <Button gap={2} mr={3} onClick={() => window.location.href = `/user-manage/edit/${prop.username}`}>
                     <BsPen />
                     Edit
                   </Button>

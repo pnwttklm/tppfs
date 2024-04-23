@@ -11,6 +11,7 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import URL from "../../../../data/url";
+import { useRouter } from "next/navigation";
 interface User {
   citizen_number: string;
   username: string;
@@ -23,15 +24,16 @@ interface User {
 }
 
 export default function Check({ params }: { params: { slug: string } }) {
+  const router = useRouter();
   if(Checker()){
     return Page(params.slug);
   }else{
-    alert("You have to log in first to access the product management page.");
-    location.href = "/login";
+    window.location.href = "/login";
   }
 }
 
 function Page(slug : string) {
+  const router = useRouter();
   const [user, setUser] = useState<User>({
     citizen_number: "",
     username: "",
@@ -60,7 +62,7 @@ function Page(slug : string) {
 
     fetchData(); // Call the fetchData function when the component mounts
   }, []);
-
+const [shown, setShown] = useState(false);
   function EditUser(user: User) {
     const axios = require("axios");
     let data = JSON.stringify({
@@ -81,12 +83,13 @@ function Page(slug : string) {
       .request(config)
       .then((response: any) => {
         console.log(response);
-        if (response) alert("Saved Successfully");
-        window.location.href = "/user-manage";
+        if (response){
+          window.location.href = "/user-manage";
+        }
       })
       .catch((error: any) => {
         console.log(error);
-        alert("Error Saving");
+        setShown(true);
       });
   }
 
@@ -99,7 +102,7 @@ function Page(slug : string) {
             &larr; Back
           </a>
         </div>
-
+        {shown && <p className="text-[#FE0000]">Data provided not meet the requirements</p>}
         {/* Input Fields */}
         <div className="flex mb-4 border-b pb-4">
           <div className="flex-1 pr-2">
@@ -167,7 +170,7 @@ function Page(slug : string) {
         {/* Action Buttons and Trash Icon */}
         <div className="flex justify-between items-center">
           <div className="text-[#3E0070]  cursor-pointer">
-            {/* <FaTrashAlt size="50" /> */}
+          {shown && <p className="text-[#FE0000]">Data provided not meet the requirements</p>}
           </div>
           <div>
             <a

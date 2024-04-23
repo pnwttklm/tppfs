@@ -3,6 +3,7 @@ import { BsEyeSlashFill, BsEyeFill } from "react-icons/bs";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Checker from "../../../data/check";
+import { useRouter } from "next/navigation";
 import {
   Button,
   Input,
@@ -22,7 +23,17 @@ interface User {
   phone_number: string;
 }
 
+export default function Check(){
+  const router = useRouter();
+  if(Checker()){
+    return Page();
+  }else{
+    window.location.href = "/login";
+  }
+}
+
 function Page() {
+  const router = useRouter();
   const [user, setUser] = useState<User>({
     citizen_number: "",
     username: "",
@@ -33,7 +44,7 @@ function Page() {
     password: "",
     phone_number: "",
   });
-
+const [shown, setShown] = useState(false);
   function AddUser(user: User) {
     const axios = require("axios");
     let data = JSON.stringify({
@@ -54,11 +65,12 @@ function Page() {
       .request(config)
       .then((response: any) => {
         console.log(response);
-        if (response) alert("Added Successfully");
-        window.location.href = "/user-manage";
+        if (response){
+          window.location.href = "/user-manage"
+        }
       })
       .catch((error: any) => {
-        alert("Error Adding User");
+        setShown(true);
       });
   }
 
@@ -71,6 +83,7 @@ function Page() {
             &larr; Back
           </a>
         </div>
+        {shown && <p className="text-[#FE0000]">Data provided not meet the requirements</p>}
 
         {/* Input Fields */}
         <div className="flex mb-4 border-b pb-4">
@@ -139,7 +152,7 @@ function Page() {
         {/* Action Buttons and Trash Icon */}
         <div className="flex justify-between items-center">
           <div className="text-[#3E0070]  cursor-pointer">
-            {/* <FaTrashAlt size="50" /> */}
+          {shown && <p className="text-[#FE0000]">Data provided not meet the requirements</p>}
           </div>
           <div>
             <a
@@ -254,5 +267,3 @@ function InputField({
     );
   }
 }
-
-export default Page;
