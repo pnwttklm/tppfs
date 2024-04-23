@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "on": "npm run dev -- -p 8001",
-    "dev": "next dev",
+    "dev": "next dev > /dev/null 2>&1",
     "build": "next build",
     "start": "next start -p 8001 ",
     "lint": "next lint"
